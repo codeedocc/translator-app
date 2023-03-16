@@ -3,7 +3,7 @@ import { Pages } from './pages'
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="wrapper">
       <Title />
       <Pages />
       <Navbar />

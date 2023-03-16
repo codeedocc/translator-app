@@ -1,5 +1,16 @@
+import { LanguagePick, TextInput } from '../components'
+
 const Home: React.FC = () => {
-  return <div>Home</div>
+  const ask = true
+  const answer = true
+
+  return (
+    <div className="content">
+      <LanguagePick />
+      <TextInput ask={ask} />
+      <TextInput answer={answer} />
+    </div>
+  )
 }
 
 export default Home
