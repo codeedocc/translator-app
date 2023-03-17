@@ -1,5 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
 import { Favourite, History, Home } from './'
+import { Routes, Route } from 'react-router-dom'
 
 const Pages: React.FC = () => {
   return (

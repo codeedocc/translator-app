@@ -6,8 +6,10 @@ const Title: React.FC = () => {
 
   return (
     <div className="title">
-      <img src={logo} alt="" />
-      <button onClick={() => navigate('/')}>Переводчик</button>
+      <div className="links">
+        <img src={logo} alt="" />
+        <button onClick={() => navigate('/')}>Переводчик</button>
+      </div>
     </div>
   )
 }
