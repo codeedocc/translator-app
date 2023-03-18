@@ -7,7 +7,7 @@ export const countryApi = createApi({
     baseUrl: 'https://rest-country-api.p.rapidapi.com/',
   }),
   endpoints: (build) => ({
-    searchCountries: build.query<CountriesInfo, string>({
+    searchCountries: build.query<CountriesInfo[], string>({
       query: (search: string) => ({
         url: '',
         headers: {

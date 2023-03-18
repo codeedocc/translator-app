@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
   modal: boolean
+  isSearching: boolean
 }
 
 const initialState: IInitialState = {
-  modal: false,
+  modal: true,
+  isSearching: false,
 }
 
 export const modalSlice = createSlice({
@@ -14,6 +16,9 @@ export const modalSlice = createSlice({
   reducers: {
     setModal: (state, action) => {
       state.modal = action.payload
+    },
+    setIsSearching: (state, action) => {
+      state.isSearching = action.payload
     },
   },
 })

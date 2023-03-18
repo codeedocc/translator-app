@@ -1,9 +1,6 @@
 import { changer, english, spanish } from '../assets/icons'
-import { useAppSelector } from '../hooks/redux'
 
 const LanguagePick: React.FC = () => {
-  const { modal } = useAppSelector((state) => state.modal)
-
   return (
     <div className="language">
       <span>

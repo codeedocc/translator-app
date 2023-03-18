@@ -1,8 +1,6 @@
 import { copy, cross, favourite, pronounce } from '../assets/icons'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
-import { useSearchCountriesQuery } from '../store/country/country.api'
 import { TranslatedResponse } from '../models/model'
-import { useState } from 'react'
 
 interface ITextInput {
   getTranslate?: () => void
@@ -17,12 +15,6 @@ const TextInput: React.FC<ITextInput> = ({
   setWord,
   translatedWord,
 }) => {
-  const [searching, setSearching] = useState(false)
-
-  const { data } = useSearchCountriesQuery('', {
-    skip: !searching,
-  })
-
   return (
     <>
       {getTranslate ? (

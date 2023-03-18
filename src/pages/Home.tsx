@@ -1,10 +1,11 @@
 import { useGetTranslateMutation } from '../store/language/language.api'
-import { LanguagePick, TextInput } from '../components'
+import { LanguagePick, Modal, TextInput } from '../components'
 import { useAppSelector } from '../hooks/redux'
 import { useActions } from '../hooks/actions'
 
 const Home: React.FC = () => {
   const { word, textFrom, textTo } = useAppSelector((state) => state.language)
+  const { modal } = useAppSelector((state) => state.modal)
   const { setWord } = useActions()
 
   const [getTranslation, { isLoading, isError, data: translatedWord }] =
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="content">
+      {modal && <Modal />}
       <LanguagePick />
       <TextInput getTranslate={getTranslate} word={word} setWord={setWord} />
       <TextInput translatedWord={translatedWord} />
