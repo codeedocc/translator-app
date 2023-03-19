@@ -1,24 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
-  modal: boolean
-  isSearching: boolean
+  isOpen: boolean
 }
 
 const initialState: IInitialState = {
-  modal: true,
-  isSearching: false,
+  isOpen: false,
 }
 
 export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    setModal: (state, action) => {
-      state.modal = action.payload
-    },
-    setIsSearching: (state, action) => {
-      state.isSearching = action.payload
+    setIsOpen: (state, action) => {
+      state.isOpen = action.payload
     },
   },
 })

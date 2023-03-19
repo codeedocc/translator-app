@@ -1,45 +1,62 @@
-import { useSearchCountriesQuery } from '../store/country/country.api'
-import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks/redux'
+import { GrFormClose } from 'react-icons/gr'
+import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
-import Select from 'react-select'
 
-const Modal = () => {
-  const { isSearching } = useAppSelector((state) => state.modal)
-  const { setIsSearching } = useActions()
-  const [country, setCountry] = useState<string[] | undefined>([])
+interface IModal {
+  dataRef: CountryList[]
+}
 
-  const { data } = useSearchCountriesQuery('', {
-    skip: isSearching,
-  })
-
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ]
-
-  useEffect(() => {
-    const check = data?.map((el) => el.translations)
-    const result = check?.map((item) => item.rus.common)
-    setCountry(result)
-  }, [])
+const Modal: React.FC<IModal> = ({ dataRef }) => {
+  const { chosenCountry } = useAppSelector((state) => state.country)
+  const { isOpen } = useAppSelector((state) => state.modal)
+  const { setIsOpen, setChosenCountry } = useActions()
 
   return (
-    <div className="modal">
-      <div className="modal-sides">
-        <div className="modal-from">
-          <p>С какого языка?</p>
-          <Select options={options} placeholder="Выбрать..." />
+    <div
+      className={isOpen ? 'modal-wrapper open' : 'modal-wrapper'}
+      onClick={() => setIsOpen(false)}
+    >
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="exit">
+          <button onClick={() => setIsOpen(false)}>
+            <GrFormClose />
+          </button>
         </div>
-        <div className="modal-to">
-          <p>На какой язык?</p>
-          <Select options={options} placeholder="Выбрать..." />
+        <div className="modal-sides">
+          <div className="modal-from">
+            <p>С какого языка?</p>
+            <select
+              onChange={(e) =>
+                setChosenCountry({ ...chosenCountry, from: e.target.value })
+              }
+            >
+              {dataRef?.map((el) => (
+                <option value={el.abbreviation} key={el.country}>
+                  {el.country}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="modal-to">
+            <p>На какой язык?</p>
+            <select
+              onChange={(e) =>
+                setChosenCountry({ ...chosenCountry, to: e.target.value })
+              }
+            >
+              {dataRef.map((el) => (
+                <option value={el.abbreviation} key={el.country}>
+                  {el.country}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div className="modal-buttons">
-        <button>Применить</button>
+        <div className="modal-buttons">
+          <button>Применить</button>
+        </div>
       </div>
     </div>
   )

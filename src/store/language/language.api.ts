@@ -1,3 +1,4 @@
+import { LanguagesResponse } from './../../models/model'
 import { TranslatedResponse } from '../../models/model'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -25,7 +26,15 @@ export const languageApi = createApi({
         }).toString(),
       }),
     }),
+    getLanguages: build.query<LanguagesResponse, string>({
+      query: (search: string) => ({
+        url: 'getLanguages',
+        headers: {
+          'X-RapidAPI-Key': import.meta.env.VITE_SECRET_API_KEY,
+        },
+      }),
+    }),
   }),
 })
 
-export const { useGetTranslateMutation } = languageApi
+export const { useGetTranslateMutation, useGetLanguagesQuery } = languageApi

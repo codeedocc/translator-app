@@ -2,14 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
   word: string
-  textFrom: string
-  textTo: string
 }
 
 const initialState: IInitialState = {
   word: '',
-  textFrom: 'ru',
-  textTo: 'en',
 }
 
 export const languageSlice = createSlice({
@@ -18,12 +14,6 @@ export const languageSlice = createSlice({
   reducers: {
     setWord: (state, action) => {
       state.word = action.payload
-    },
-    setTextFrom: (state, action) => {
-      state.textFrom = action.payload
-    },
-    setTextTo: (state, action) => {
-      state.textTo = action.payload
     },
   },
 })

@@ -124,3 +124,26 @@ export interface TranslatedResponse {
 export interface Data {
   translatedText: string
 }
+
+export interface CountryList {
+  abbreviation: string
+  country: string
+}
+
+export interface ChosenCountry {
+  from: string
+  to: string
+}
+
+export interface LanguagesResponse {
+  data: Data
+}
+
+export interface Data {
+  languages: Language[]
+}
+
+export interface Language {
+  code: string
+  name: string
+}

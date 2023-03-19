@@ -1,24 +1,23 @@
+import { ChosenCountry } from '../../models/model'
 import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
-  countryFrom: string
-  countryTo: string
+  chosenCountry: ChosenCountry
 }
 
 const initialState: IInitialState = {
-  countryFrom: '',
-  countryTo: '',
+  chosenCountry: {
+    from: '',
+    to: '',
+  },
 }
 
 export const countrySlice = createSlice({
   name: 'contry',
   initialState,
   reducers: {
-    setCountryFrom: (state, action) => {
-      state.countryFrom = action.payload
-    },
-    setCountryTo: (state, action) => {
-      state.countryFrom = action.payload
+    setChosenCountry: (state, action) => {
+      state.chosenCountry = action.payload
     },
   },
 })
