@@ -1,16 +1,16 @@
 import { useAppSelector } from '../hooks/redux'
-import { GrFormClose } from 'react-icons/gr'
 import { CountryList } from '../models/model'
+import { GrFormClose } from 'react-icons/gr'
 import { useActions } from '../hooks/actions'
 
 interface IModal {
-  dataRef: CountryList[]
+  availableLanguages: CountryList[]
 }
 
-const Modal: React.FC<IModal> = ({ dataRef }) => {
-  const { chosenCountry } = useAppSelector((state) => state.country)
-  const { isOpen } = useAppSelector((state) => state.modal)
+const Modal: React.FC<IModal> = ({ availableLanguages }) => {
   const { setIsOpen, setChosenCountry } = useActions()
+  const { isOpen } = useAppSelector((state) => state.modal)
+  const { chosenCountry } = useAppSelector((state) => state.country)
 
   return (
     <div
@@ -28,10 +28,22 @@ const Modal: React.FC<IModal> = ({ dataRef }) => {
             <p>С какого языка?</p>
             <select
               onChange={(e) =>
-                setChosenCountry({ ...chosenCountry, from: e.target.value })
+                setChosenCountry({
+                  ...chosenCountry,
+                  from: {
+                    ...chosenCountry.from,
+                    abbreviation: e.target.value,
+                    country: availableLanguages.find(
+                      (el) => el.abbreviation === e.target.value
+                    )?.country,
+                    flag: availableLanguages.find(
+                      (el) => el.abbreviation === e.target.value
+                    )?.flag,
+                  },
+                })
               }
             >
-              {dataRef?.map((el) => (
+              {availableLanguages?.map((el) => (
                 <option value={el.abbreviation} key={el.country}>
                   {el.country}
                 </option>
@@ -42,20 +54,28 @@ const Modal: React.FC<IModal> = ({ dataRef }) => {
             <p>На какой язык?</p>
             <select
               onChange={(e) =>
-                setChosenCountry({ ...chosenCountry, to: e.target.value })
+                setChosenCountry({
+                  ...chosenCountry,
+                  to: {
+                    ...chosenCountry.to,
+                    abbreviation: e.target.value,
+                    country: availableLanguages.find(
+                      (el) => el.abbreviation === e.target.value
+                    )?.country,
+                    flag: availableLanguages.find(
+                      (el) => el.abbreviation === e.target.value
+                    )?.flag,
+                  },
+                })
               }
             >
-              {dataRef.map((el) => (
+              {availableLanguages.map((el) => (
                 <option value={el.abbreviation} key={el.country}>
                   {el.country}
                 </option>
               ))}
             </select>
           </div>
-        </div>
-
-        <div className="modal-buttons">
-          <button>Применить</button>
         </div>
       </div>
     </div>

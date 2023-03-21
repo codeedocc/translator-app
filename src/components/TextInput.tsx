@@ -1,6 +1,7 @@
 import { copy, cross, favourite, pronounce } from '../assets/icons'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { TranslatedResponse } from '../models/model'
+import { useAppSelector } from '../hooks/redux'
 
 interface ITextInput {
   getTranslate?: () => void
@@ -15,13 +16,15 @@ const TextInput: React.FC<ITextInput> = ({
   setWord,
   translatedWord,
 }) => {
+  const { chosenCountry } = useAppSelector((state) => state.country)
+
   return (
     <>
       {getTranslate ? (
         <div className="text-input">
           <div className="header">
             <span>
-              <p>English</p>
+              <p>{chosenCountry.from.country}</p>
               <img src={pronounce} alt="" />
             </span>
             <img src={cross} alt="" />
@@ -41,7 +44,7 @@ const TextInput: React.FC<ITextInput> = ({
         <div className="text-input">
           <div className="header">
             <span>
-              <p>Spanish</p>
+              <p>{chosenCountry.to.country}</p>
               <img src={pronounce} alt="" />
             </span>
             <img src={cross} alt="" />

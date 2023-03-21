@@ -16,6 +16,7 @@ const Home: React.FC = () => {
   const { chosenCountry } = useAppSelector((state) => state.country)
 
   const dataRef = useRef<CountryList[]>([])
+  const availableLanguages = useRef<CountryList[]>([])
 
   const [getTranslation, { data: translatedWord }] = useGetTranslateMutation()
   const { data: languages } = useGetLanguagesQuery('')
@@ -24,8 +25,8 @@ const Home: React.FC = () => {
   const getTranslate = async () => {
     try {
       await getTranslation({
-        from: chosenCountry.from.toLowerCase(),
-        to: chosenCountry.to.toLowerCase(),
+        from: chosenCountry.from.abbreviation.toLowerCase(),
+        to: chosenCountry.to.abbreviation.toLowerCase(),
         text: word,
       })
     } catch (error) {
@@ -35,39 +36,53 @@ const Home: React.FC = () => {
 
   const getCountries = () => {
     if (countries && languages) {
-      const abbreviation = countries?.map((el) => el.altSpellings[0])
+      const result: CountryList[] = [
+        {
+          abbreviation: 'en',
+          country: 'Америка',
+          flag: 'https://flagcdn.com/us.svg',
+        },
+      ]
+
+      const abbreviation = countries?.map((el) =>
+        el.altSpellings[0].toLowerCase()
+      )
 
       const country = countries
         ?.map((el) => el.translations)
         .map((item) => item.rus.common)
 
+      const flags = countries?.map((el) => el.flags[0])
+
       const countryList = abbreviation?.map((abbr, index) => ({
         abbreviation: abbr,
         country: country![index],
+        flag: flags[index],
       }))
 
       dataRef.current = countryList
 
-      // собираю доступные для перевода языки
+      const availableLanguageCode = languages?.data.languages.map(
+        (el) => el.code
+      )
 
-      // const availableLanguage = languages?.data.languages.map((el) => el.name)
+      dataRef.current.find((el) => {
+        const languages = availableLanguageCode.map((el) => el)
 
-      // const countryLanguages = countries
-      //   .map((el) => el.languages)
-      //   .map((el) => Object.values(el))
-      //   .flatMap((arr) => arr)
-      //   .filter((el, index, self) => self.indexOf(el) === index)
-      //   .sort()
+        for (let i = 0; i < languages.length; i++) {
+          const language = languages[i]
 
-      // const result = []
-      // result.push(availableLanguage)
-      // result.push(countryLanguages)
+          if (el.abbreviation === language) {
+            result.push({
+              abbreviation: el.abbreviation,
+              country: el.country,
+              flag: el.flag,
+            })
+          }
+        }
+      })
 
-      // const done = result
-      //   .flatMap((el) => el)
-      //   .filter((el, index, self) => self.indexOf(el) === index)
-
-      // console.log(done)
+      availableLanguages.current = result
     }
   }
 
@@ -77,7 +92,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="content">
-      {isOpen && <Modal dataRef={dataRef.current} />}
+      {isOpen && <Modal availableLanguages={availableLanguages.current} />}
       <LanguagePick />
       <TextInput getTranslate={getTranslate} word={word} setWord={setWord} />
       <TextInput translatedWord={translatedWord} />

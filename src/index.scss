@@ -191,29 +191,7 @@
           flex-direction: column;
           align-items: center;
           gap: 20px;
-          padding: 20px;
-        }
-      }
-
-      .modal-buttons {
-        display: flex;
-        justify-content: center;
-        padding: 0px 15px 15px 15px;
-
-        button {
-          width: 20vw;
-          height: 50px;
-          font-size: 20px;
-          border-radius: 10px;
-          border: 1px solid #fff;
-          background: #003366;
-          color: #fff;
-          cursor: pointer;
-
-          @include mobile {
-            font-size: 14px;
-            width: 30vw;
-          }
+          padding: 0px 20px 40px 20px;
         }
       }
     }
@@ -254,6 +232,13 @@
         align-items: center;
         gap: 10px;
         cursor: pointer;
+      }
+
+      img {
+        border-radius: 50%;
+        height: 24px;
+        object-fit: cover;
+        width: 24px;
       }
 
       .changer {

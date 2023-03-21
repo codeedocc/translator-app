@@ -128,11 +128,12 @@ export interface Data {
 export interface CountryList {
   abbreviation: string
   country: string
+  flag: string
 }
 
 export interface ChosenCountry {
-  from: string
-  to: string
+  from: CountryList
+  to: CountryList
 }
 
 export interface LanguagesResponse {

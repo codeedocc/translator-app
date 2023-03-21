@@ -7,13 +7,21 @@ interface IInitialState {
 
 const initialState: IInitialState = {
   chosenCountry: {
-    from: '',
-    to: '',
+    from: {
+      abbreviation: 'ru',
+      country: 'Россия',
+      flag: 'https://flagcdn.com/ru.svg',
+    },
+    to: {
+      abbreviation: 'en',
+      country: 'Америка',
+      flag: 'https://flagcdn.com/us.svg',
+    },
   },
 }
 
 export const countrySlice = createSlice({
-  name: 'contry',
+  name: 'country',
   initialState,
   reducers: {
     setChosenCountry: (state, action) => {
