@@ -2,6 +2,9 @@ import { copy, cross, favourite, pronounce } from '../assets/icons'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { TranslatedResponse } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
+import toast, { Toaster } from 'react-hot-toast'
+import { useActions } from '../hooks/actions'
+import { useEffect } from 'react'
 
 interface ITextInput {
   getTranslate?: () => void
@@ -16,7 +19,15 @@ const TextInput: React.FC<ITextInput> = ({
   setWord,
   translatedWord,
 }) => {
+  const { setClearTranslation } = useActions()
   const { chosenCountry } = useAppSelector((state) => state.country)
+  const { clearTranslation } = useAppSelector((state) => state.language)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(translatedWord!.data.translatedText)
+
+    toast.success('Вы скопировали текст.')
+  }
 
   return (
     <>
@@ -27,7 +38,7 @@ const TextInput: React.FC<ITextInput> = ({
               <p>{chosenCountry.from.country}</p>
               <img src={pronounce} alt="" />
             </span>
-            <img src={cross} alt="" />
+            <img src={cross} alt="" onClick={() => setWord!('')} />
           </div>
           <div className="text">
             <textarea
@@ -47,34 +58,55 @@ const TextInput: React.FC<ITextInput> = ({
               <p>{chosenCountry.to.country}</p>
               <img src={pronounce} alt="" />
             </span>
-            <img src={cross} alt="" />
-          </div>
-          <div className="text">
-            <textarea
-              placeholder="Здесь появится перевод..."
-              value={translatedWord?.data.translatedText}
-              disabled={true}
+            <img
+              src={cross}
+              alt=""
+              onClick={() => setClearTranslation(!clearTranslation)}
             />
           </div>
+          <div className="text">
+            {!clearTranslation ? (
+              <textarea
+                placeholder="Здесь появится перевод..."
+                value={translatedWord?.data.translatedText}
+                disabled={true}
+              />
+            ) : (
+              <textarea
+                placeholder="Здесь появится перевод..."
+                value={''}
+                disabled={true}
+              />
+            )}
+          </div>
           <div className="footer">
-            <div>
-              <button
-                id="copying"
-                style={{ display: 'none' }}
-                onClick={() => console.log('ты кликнул на копи')}
-              />
-              <button
-                id="fav"
-                style={{ display: 'none' }}
-                onClick={() => console.log('ты кликнул на fav')}
-              />
-              <label htmlFor="copying">
-                <img src={copy} />
-              </label>
-              <label htmlFor="fav">
-                <img src={favourite} />
-              </label>
-            </div>
+            {translatedWord?.data.translatedText && (
+              <div>
+                <button
+                  id="copying"
+                  style={{ display: 'none' }}
+                  onClick={() => handleCopy()}
+                />
+                <button
+                  id="fav"
+                  style={{ display: 'none' }}
+                  onClick={() => console.log('ты кликнул на fav')}
+                />
+                <label htmlFor="copying">
+                  <img src={copy} />
+                </label>
+                <label htmlFor="fav">
+                  <img src={favourite} />
+                </label>
+              </div>
+            )}
+          </div>
+          <div className="toaster">
+            <Toaster
+              containerStyle={{
+                position: 'relative',
+              }}
+            />
           </div>
         </div>
       )}

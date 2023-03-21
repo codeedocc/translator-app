@@ -2,10 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
   word: string
+  copiedWord: string
+  clearTranslation: boolean
 }
 
 const initialState: IInitialState = {
   word: '',
+  copiedWord: '',
+  clearTranslation: false,
 }
 
 export const languageSlice = createSlice({
@@ -14,6 +18,12 @@ export const languageSlice = createSlice({
   reducers: {
     setWord: (state, action) => {
       state.word = action.payload
+    },
+    setCopiedWord: (state, action) => {
+      state.copiedWord = action.payload
+    },
+    setClearTranslation: (state, action) => {
+      state.clearTranslation = action.payload
     },
   },
 })

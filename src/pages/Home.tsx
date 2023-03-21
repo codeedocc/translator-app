@@ -10,7 +10,7 @@ import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
 
 const Home: React.FC = () => {
-  const { setWord } = useActions()
+  const { setWord, setClearTranslation } = useActions()
   const { isOpen } = useAppSelector((state) => state.modal)
   const { word } = useAppSelector((state) => state.language)
   const { chosenCountry } = useAppSelector((state) => state.country)
@@ -24,6 +24,8 @@ const Home: React.FC = () => {
 
   const getTranslate = async () => {
     try {
+      setClearTranslation(false)
+
       await getTranslation({
         from: chosenCountry.from.abbreviation.toLowerCase(),
         to: chosenCountry.to.abbreviation.toLowerCase(),

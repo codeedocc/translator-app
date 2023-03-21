@@ -345,6 +345,15 @@
           margin-left: 20px;
         }
       }
+
+      .toaster {
+        height: 10px;
+        padding-top: 60px;
+
+        @include mobile {
+          font-size: 12px;
+        }
+      }
     }
   }
 
