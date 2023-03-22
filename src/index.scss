@@ -255,8 +255,8 @@
         width: 80%;
       }
 
-      width: calc(100% - 50px);
-      height: 216px;
+      width: calc(100% - 70px);
+      height: 35%;
       background: linear-gradient(
           0deg,
           rgba(103, 80, 164, 0.05),
@@ -307,12 +307,40 @@
           font-family: 'Roboto';
           font-style: normal;
           font-weight: 400;
-          font-size: 14px;
-          color: #000000;
+          line-height: 34px;
+          font-size: 22px;
+          color: rgb(60, 64, 67);
           height: calc(100% - 10px);
           width: calc(100% - 40px);
           padding-left: 20px;
           padding-right: 20px;
+
+          @include mobile {
+            font-size: 14px;
+            line-height: 32px;
+          }
+        }
+
+        .loader {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+
+          svg {
+            height: 40px;
+            width: 40px;
+            --tw-text-opacity: 1;
+            color: rgb(229 231 235 / var(--tw-text-opacity));
+            animation: spin 1s linear infinite;
+            fill: #003366;
+          }
         }
       }
 

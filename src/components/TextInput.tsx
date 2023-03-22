@@ -4,13 +4,15 @@ import { TranslatedResponse } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { useActions } from '../hooks/actions'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { Loader } from './'
 
 interface ITextInput {
   getTranslate?: () => void
   word?: string
   setWord?: ActionCreatorWithPayload<any, 'language/setWord'>
   translatedWord?: TranslatedResponse
+  isLoading?: boolean
 }
 
 const TextInput: React.FC<ITextInput> = ({
@@ -18,16 +20,24 @@ const TextInput: React.FC<ITextInput> = ({
   word,
   setWord,
   translatedWord,
+  isLoading,
 }) => {
   const { setClearTranslation } = useActions()
   const { chosenCountry } = useAppSelector((state) => state.country)
   const { clearTranslation } = useAppSelector((state) => state.language)
+  const textRef = useRef<HTMLTextAreaElement | null>(null)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(translatedWord!.data.translatedText)
 
     toast.success('Вы скопировали текст.')
   }
+
+  useEffect(() => {
+    if (textRef.current !== null && word === '') {
+      textRef.current.focus()
+    }
+  }, [])
 
   return (
     <>
@@ -45,10 +55,11 @@ const TextInput: React.FC<ITextInput> = ({
               placeholder="Начните печатать..."
               value={word}
               onChange={(e) => setWord!(e.target.value)}
+              ref={textRef}
             />
           </div>
           <div className="footer">
-            <button onClick={getTranslate}>Перевести</button>
+            {word && <button onClick={getTranslate}>Перевести</button>}
           </div>
         </div>
       ) : (
@@ -65,7 +76,9 @@ const TextInput: React.FC<ITextInput> = ({
             />
           </div>
           <div className="text">
-            {!clearTranslation ? (
+            {isLoading ? (
+              <Loader />
+            ) : !clearTranslation ? (
               <textarea
                 placeholder="Здесь появится перевод..."
                 value={translatedWord?.data.translatedText}

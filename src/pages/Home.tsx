@@ -18,7 +18,8 @@ const Home: React.FC = () => {
   const dataRef = useRef<CountryList[]>([])
   const availableLanguages = useRef<CountryList[]>([])
 
-  const [getTranslation, { data: translatedWord }] = useGetTranslateMutation()
+  const [getTranslation, { data: translatedWord, isLoading }] =
+    useGetTranslateMutation()
   const { data: languages } = useGetLanguagesQuery('')
   const { data: countries } = useSearchCountriesQuery('')
 
@@ -97,7 +98,7 @@ const Home: React.FC = () => {
       {isOpen && <Modal availableLanguages={availableLanguages.current} />}
       <LanguagePick />
       <TextInput getTranslate={getTranslate} word={word} setWord={setWord} />
-      <TextInput translatedWord={translatedWord} />
+      <TextInput translatedWord={translatedWord} isLoading={isLoading} />
     </div>
   )
 }
