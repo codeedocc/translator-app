@@ -12,8 +12,8 @@ const Navbar: React.FC = () => {
                 src={item.image}
                 alt={item.image}
                 style={{
-                  height: item.name === 'Лого' ? '48px' : '24px',
-                  width: item.name === 'Лого' ? '48px' : '24px',
+                  height: item.name === 'Лого' ? '48px' : '28px',
+                  width: item.name === 'Лого' ? '48px' : '28px',
                 }}
               />
               <p>{item.name !== 'Лого' && item.name}</p>

@@ -1,4 +1,4 @@
-import { copy, cross, favourite, pronounce } from '../assets/icons'
+import { copy, cross, favourite } from '../assets/icons'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { TranslatedResponse } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
@@ -46,7 +46,6 @@ const TextInput: React.FC<ITextInput> = ({
           <div className="header">
             <span>
               <p>{chosenCountry.from.country}</p>
-              <img src={pronounce} alt="" />
             </span>
             <img src={cross} alt="" onClick={() => setWord!('')} />
           </div>
@@ -67,7 +66,6 @@ const TextInput: React.FC<ITextInput> = ({
           <div className="header">
             <span>
               <p>{chosenCountry.to.country}</p>
-              <img src={pronounce} alt="" />
             </span>
             <img
               src={cross}

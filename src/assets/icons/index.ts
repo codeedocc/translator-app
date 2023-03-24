@@ -6,5 +6,16 @@ import favourite from './favourite.svg'
 import history from './history.svg'
 import logo from './logo.png'
 import favLink from './favLink.svg'
+import infoFav from './infoFav.svg'
 
-export { changer, cross, pronounce, copy, favourite, history, logo, favLink }
+export {
+  changer,
+  cross,
+  pronounce,
+  copy,
+  favourite,
+  history,
+  logo,
+  favLink,
+  infoFav,
+}

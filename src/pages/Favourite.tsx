@@ -1,5 +1,11 @@
+import { TranslatedText } from '../components'
+
 const Favourite: React.FC = () => {
-  return <div>Favourite</div>
+  return (
+    <div className="info">
+      <TranslatedText />
+    </div>
+  )
 }
 
 export default Favourite

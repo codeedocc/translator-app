@@ -377,9 +377,110 @@
       .toaster {
         height: 10px;
         padding-top: 60px;
+        font-weight: 600;
+        font-size: 16px;
 
         @include mobile {
           font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .info {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    padding-top: 20px;
+
+    .info-text {
+      @include pc {
+        width: 60%;
+      }
+
+      @include tablet {
+        width: 80%;
+      }
+
+      width: calc(100% - 70px);
+      height: 110px;
+      background: linear-gradient(
+          0deg,
+          rgba(103, 80, 164, 0.05),
+          rgba(103, 80, 164, 0.05)
+        ),
+        #fffbfe;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      margin-top: 26px;
+      position: relative;
+      padding-right: 15px;
+      padding-left: 15px;
+
+      .line {
+        background: #969696;
+        height: 1px;
+      }
+
+      .info-from {
+        display: flex;
+        padding: 14px;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          gap: 30px;
+
+          p:first-child {
+            color: #000000;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+          }
+
+          p {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            color: #003366;
+          }
+        }
+      }
+
+      .info-to {
+        display: flex;
+        padding: 14px;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          gap: 30px;
+
+          p:first-child {
+            color: #000000;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+          }
+
+          p {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            color: #ff6600;
+          }
         }
       }
     }
@@ -405,11 +506,6 @@
     .navLink {
       text-decoration: none;
 
-      img {
-        height: 24px;
-        width: 24px;
-      }
-
       span {
         display: flex;
         flex-direction: column;
@@ -420,6 +516,13 @@
         font-weight: 400;
         font-size: 12px;
         color: #000000;
+      }
+
+      &.active {
+        p {
+          text-decoration: underline;
+          color: #003366;
+        }
       }
     }
   }

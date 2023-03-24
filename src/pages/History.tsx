@@ -1,5 +1,11 @@
+import { TranslatedText } from '../components'
+
 const History: React.FC = () => {
-  return <div>History</div>
+  return (
+    <div className="info">
+      <TranslatedText />
+    </div>
+  )
 }
 
 export default History
