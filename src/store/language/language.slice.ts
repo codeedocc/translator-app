@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { FavText } from '../../models/model'
 
 interface IInitialState {
   word: string
   copiedWord: string
   clearTranslation: boolean
+  favText: FavText[]
 }
 
 const initialState: IInitialState = {
   word: '',
   copiedWord: '',
   clearTranslation: false,
+  favText: [],
 }
 
 export const languageSlice = createSlice({
@@ -24,6 +27,9 @@ export const languageSlice = createSlice({
     },
     setClearTranslation: (state, action) => {
       state.clearTranslation = action.payload
+    },
+    setFavText: (state, action) => {
+      state.favText = action.payload
     },
   },
 })

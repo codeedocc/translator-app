@@ -148,3 +148,12 @@ export interface Language {
   code: string
   name: string
 }
+
+export interface FavText {
+  title: string
+  word: string
+  translatedWord: string
+  from: string
+  to: string
+  id?: number
+}

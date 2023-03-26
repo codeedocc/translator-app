@@ -85,6 +85,214 @@
     }
   }
 
+  .modal-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+
+    &.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      color: #003366;
+      width: 30vw;
+      border-radius: 15px;
+      box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(
+          0deg,
+          rgba(103, 80, 164, 0.05),
+          rgba(103, 80, 164, 0.05)
+        ),
+        #fffbfe;
+
+      @include mobile {
+        width: 85vw;
+      }
+
+      &.description {
+        height: auto;
+        max-height: 60%;
+        width: 50vw;
+        overflow-y: auto;
+
+        @include mobile {
+          width: 85vw;
+        }
+      }
+
+      .info-from {
+        display: flex;
+        padding: 14px;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          gap: 30px;
+
+          p:first-child {
+            color: #000000;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+          }
+
+          p {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            color: #003366;
+          }
+        }
+      }
+
+      .line {
+        background: #969696;
+        height: 1px;
+      }
+
+      .info-to {
+        display: flex;
+        padding: 14px;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          gap: 30px;
+
+          p:first-child {
+            color: #000000;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+          }
+
+          p {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            color: #ff6600;
+          }
+        }
+      }
+    }
+
+    .exit {
+      padding-top: 10px;
+      padding-right: 20px;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background: none;
+        font-size: 20px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+
+    .modal-sides {
+      select {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      option {
+        width: 100%;
+      }
+
+      p {
+        font-size: 17px;
+
+        @include mobile {
+          font-size: 14px;
+        }
+      }
+
+      .modal-from {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0px 20px 20px 20px;
+      }
+
+      .modal-to {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0px 20px 40px 20px;
+      }
+
+      .modal-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0px 20px 20px 20px;
+      }
+
+      .modal-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0px 20px 15px 20px;
+
+        input {
+          width: 100%;
+          font-size: 16px;
+          border: none;
+          border-bottom: 1px solid #003366;
+          background: none;
+          outline: none;
+        }
+
+        button {
+          background: #003366;
+          border: none;
+          height: 40px;
+          width: 108px;
+          border-radius: 100px;
+          color: #fff;
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
   .content {
     position: relative;
     height: calc(100% - 140px);
@@ -99,101 +307,6 @@
     p {
       font-size: 24px;
       margin: 0;
-    }
-
-    .modal-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      height: 100vh;
-      width: 100vw;
-      top: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 5;
-      opacity: 0;
-      pointer-events: none;
-
-      &.open {
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      .modal {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        color: #003366;
-        width: 30vw;
-        border-radius: 15px;
-        box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(
-            0deg,
-            rgba(103, 80, 164, 0.05),
-            rgba(103, 80, 164, 0.05)
-          ),
-          #fffbfe;
-
-        @include mobile {
-          width: 85vw;
-        }
-      }
-
-      .exit {
-        padding-top: 10px;
-        padding-right: 20px;
-        display: flex;
-        justify-content: flex-end;
-
-        button {
-          background: none;
-          font-size: 20px;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-      }
-
-      .modal-sides {
-        select {
-          width: 100%;
-          height: 40px;
-          text-align: center;
-          appearance: none;
-          -webkit-appearance: none;
-        }
-
-        option {
-          width: 100%;
-        }
-
-        p {
-          font-size: 17px;
-
-          @include mobile {
-            font-size: 14px;
-          }
-        }
-
-        .modal-from {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;
-          padding: 0px 20px 20px 20px;
-        }
-
-        .modal-to {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;
-          padding: 0px 20px 40px 20px;
-        }
-      }
     }
 
     .language {
@@ -407,7 +520,7 @@
       }
 
       width: calc(100% - 70px);
-      height: 110px;
+      height: 90px;
       background: linear-gradient(
           0deg,
           rgba(103, 80, 164, 0.05),
@@ -420,67 +533,22 @@
       position: relative;
       padding-right: 15px;
       padding-left: 15px;
+      cursor: pointer;
 
-      .line {
-        background: #969696;
-        height: 1px;
-      }
-
-      .info-from {
+      .info-wrapper {
         display: flex;
         padding: 14px;
         justify-content: space-between;
+        align-items: center;
+        height: calc(100% - 26px);
 
-        span {
-          display: flex;
-          gap: 30px;
-
-          p:first-child {
-            color: #000000;
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 19px;
-          }
-
-          p {
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 19px;
-            color: #003366;
-          }
-        }
-      }
-
-      .info-to {
-        display: flex;
-        padding: 14px;
-        justify-content: space-between;
-
-        span {
-          display: flex;
-          gap: 30px;
-
-          p:first-child {
-            color: #000000;
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 19px;
-          }
-
-          p {
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 19px;
-            color: #ff6600;
-          }
+        p {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 19px;
+          color: #003366;
         }
       }
     }

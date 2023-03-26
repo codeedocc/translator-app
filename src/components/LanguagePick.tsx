@@ -1,11 +1,10 @@
 import { useAppSelector } from '../hooks/redux'
 import { useActions } from '../hooks/actions'
 import { changer } from '../assets/icons'
-import { useEffect } from 'react'
 
 const LanguagePick: React.FC = () => {
-  const { setIsOpen, setChosenCountry } = useActions()
-  const { isOpen } = useAppSelector((state) => state.modal)
+  const { setIsOpenLanguage, setChosenCountry } = useActions()
+  const { isOpenLanguage } = useAppSelector((state) => state.modal)
   const { chosenCountry } = useAppSelector((state) => state.country)
 
   const switchLanguages = () => {
@@ -22,7 +21,7 @@ const LanguagePick: React.FC = () => {
 
   return (
     <div className="language">
-      <span onClick={() => setIsOpen(!isOpen)}>
+      <span onClick={() => setIsOpenLanguage(!isOpenLanguage)}>
         <img src={chosenCountry.from.flag} alt="" />
         <p>{chosenCountry.from.country}</p>
       </span>
@@ -32,7 +31,7 @@ const LanguagePick: React.FC = () => {
         className="changer"
         onClick={() => switchLanguages()}
       />
-      <span onClick={() => setIsOpen(!isOpen)}>
+      <span onClick={() => setIsOpenLanguage(!isOpenLanguage)}>
         <p>{chosenCountry.to.country}</p>
         <img src={chosenCountry.to.flag} alt="" />
       </span>

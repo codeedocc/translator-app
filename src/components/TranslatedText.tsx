@@ -1,23 +1,51 @@
+import { GrFormClose } from 'react-icons/gr'
 import { infoFav } from '../assets/icons'
+import { useActions } from '../hooks/actions'
+import { useAppSelector } from '../hooks/redux'
+import { Modal } from './'
+import { FavText } from '../models/model'
 
-const TranslatedText = () => {
+const TranslatedText: React.FC<FavText> = ({
+  to,
+  from,
+  word,
+  translatedWord,
+  title,
+}) => {
+  const { setCheckFav } = useActions()
+  const { checkFav } = useAppSelector((state) => state.modal)
+
   return (
-    <div className="info-text">
-      <div className="info-from">
-        <span>
-          <p>en</p>
-          <p>Hello how are you?</p>
-        </span>
-        <img src={infoFav} alt="" />
+    <>
+      <div className="info-text" onClick={() => setCheckFav(true)}>
+        <div className="info-wrapper">
+          <p>{title}</p>
+          <img src={infoFav} alt="" />
+        </div>
       </div>
-      <div className="line" />
-      <div className="info-to">
-        <span>
-          <p>sp</p>
-          <p>¿Hola, cómo estás?</p>
-        </span>
-      </div>
-    </div>
+      {checkFav && (
+        <Modal>
+          <div className="exit">
+            <button onClick={() => setCheckFav(false)}>
+              <GrFormClose />
+            </button>
+          </div>
+          <div className="info-from">
+            <span>
+              <p>{from}</p>
+              <p>{word}</p>
+            </span>
+          </div>
+          <div className="line" />
+          <div className="info-to">
+            <span>
+              <p>{to}</p>
+              <p>{translatedWord}</p>
+            </span>
+          </div>
+        </Modal>
+      )}
+    </>
   )
 }
 

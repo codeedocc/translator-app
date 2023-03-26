@@ -8,10 +8,12 @@ import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
+import { GrFormClose } from 'react-icons/gr'
 
 const Home: React.FC = () => {
-  const { setWord, setClearTranslation } = useActions()
-  const { isOpen } = useAppSelector((state) => state.modal)
+  const { setWord, setClearTranslation, setIsOpenLanguage, setChosenCountry } =
+    useActions()
+  const { isOpenLanguage } = useAppSelector((state) => state.modal)
   const { word } = useAppSelector((state) => state.language)
   const { chosenCountry } = useAppSelector((state) => state.country)
 
@@ -89,15 +91,85 @@ const Home: React.FC = () => {
     }
   }
 
+  const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    return {
+      from() {
+        setChosenCountry({
+          ...chosenCountry,
+          from: {
+            ...chosenCountry.from,
+            abbreviation: e.target.value,
+            country: availableLanguages.current.find(
+              (el) => el.abbreviation === e.target.value
+            )?.country,
+            flag: availableLanguages.current.find(
+              (el) => el.abbreviation === e.target.value
+            )?.flag,
+          },
+        })
+
+        setWord('')
+        setClearTranslation(true)
+      },
+      to() {
+        setChosenCountry({
+          ...chosenCountry,
+          to: {
+            ...chosenCountry.to,
+            abbreviation: e.target.value,
+            country: availableLanguages.current.find(
+              (el) => el.abbreviation === e.target.value
+            )?.country,
+            flag: availableLanguages.current.find(
+              (el) => el.abbreviation === e.target.value
+            )?.flag,
+          },
+        })
+
+        setClearTranslation(true)
+      },
+    }
+  }
+
   useEffect(() => {
     getCountries()
   }, [countries])
 
   return (
     <div className="content">
-      {isOpen && <Modal availableLanguages={availableLanguages.current} />}
+      {isOpenLanguage && (
+        <Modal>
+          <div className="exit">
+            <button onClick={() => setIsOpenLanguage(false)}>
+              <GrFormClose />
+            </button>
+          </div>
+          <div className="modal-sides">
+            <div className="modal-from">
+              <p>С какого языка?</p>
+              <select onChange={(e) => changeLanguage(e).from()}>
+                {availableLanguages?.current.map((el) => (
+                  <option value={el.abbreviation} key={el.country}>
+                    {el.country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="modal-to">
+              <p>На какой язык?</p>
+              <select onChange={(e) => changeLanguage(e).to()}>
+                {availableLanguages?.current.map((el) => (
+                  <option value={el.abbreviation} key={el.country}>
+                    {el.country}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </Modal>
+      )}
       <LanguagePick />
-      <TextInput getTranslate={getTranslate} word={word} setWord={setWord} />
+      <TextInput getTranslate={getTranslate} setWord={setWord} />
       <TextInput translatedWord={translatedWord} isLoading={isLoading} />
     </div>
   )

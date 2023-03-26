@@ -5,11 +5,11 @@ import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { useActions } from '../hooks/actions'
 import { useEffect, useRef } from 'react'
-import { Loader } from './'
+import { Loader, Modal } from './'
+import { GrFormClose } from 'react-icons/gr'
 
 interface ITextInput {
   getTranslate?: () => void
-  word?: string
   setWord?: ActionCreatorWithPayload<any, 'language/setWord'>
   translatedWord?: TranslatedResponse
   isLoading?: boolean
@@ -17,20 +17,41 @@ interface ITextInput {
 
 const TextInput: React.FC<ITextInput> = ({
   getTranslate,
-  word,
   setWord,
   translatedWord,
   isLoading,
 }) => {
-  const { setClearTranslation } = useActions()
+  const { setClearTranslation, setIsOpenAddFav, setFavName } = useActions()
   const { chosenCountry } = useAppSelector((state) => state.country)
-  const { clearTranslation } = useAppSelector((state) => state.language)
+  const { clearTranslation, word } = useAppSelector((state) => state.language)
+  const { isOpenAddFav, favName } = useAppSelector((state) => state.modal)
   const textRef = useRef<HTMLTextAreaElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(translatedWord!.data.translatedText)
 
-    toast.success('Вы скопировали текст.')
+    toast.success('Вы скопировали текст')
+  }
+
+  const handeAddFav = () => {
+    const favourite = {
+      title: favName,
+      word: word,
+      translatedWord: translatedWord?.data.translatedText,
+      from: chosenCountry.from.abbreviation,
+      to: chosenCountry.to.abbreviation,
+      id: Date.now(),
+    }
+
+    localStorage.setItem(favName, JSON.stringify(favourite))
+    setFavName('')
+    setIsOpenAddFav(false)
+
+    toast('Добавлено в избранное', {
+      duration: 2000,
+      icon: '❤️',
+    })
   }
 
   useEffect(() => {
@@ -39,8 +60,35 @@ const TextInput: React.FC<ITextInput> = ({
     }
   }, [])
 
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [isOpenAddFav])
+
   return (
     <>
+      {isOpenAddFav && (
+        <Modal>
+          <div className="exit">
+            <button onClick={() => setIsOpenAddFav(false)}>
+              <GrFormClose />
+            </button>
+          </div>
+          <div className="modal-sides">
+            <div className="modal-title">
+              <p>Как назвать?</p>
+            </div>
+            <div className="modal-input">
+              <input
+                type="text"
+                ref={inputRef}
+                value={favName}
+                onChange={(e) => setFavName(e.target.value)}
+              />
+              <button onClick={handeAddFav}>ОК</button>
+            </div>
+          </div>
+        </Modal>
+      )}
       {getTranslate ? (
         <div className="text-input">
           <div className="header">
@@ -101,7 +149,7 @@ const TextInput: React.FC<ITextInput> = ({
                 <button
                   id="fav"
                   style={{ display: 'none' }}
-                  onClick={() => console.log('ты кликнул на fav')}
+                  onClick={() => setIsOpenAddFav(true)}
                 />
                 <label htmlFor="copying">
                   <img src={copy} />
