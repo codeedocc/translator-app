@@ -1,9 +1,9 @@
-import Title from './Title'
-import Navbar from './Navbar'
+import TranslatedText from './TranslatedText'
 import LanguagePick from './LanguagePick'
 import TextInput from './TextInput'
-import Modal from './Modal'
+import Navbar from './Navbar'
 import Loader from './Loader'
-import TranslatedText from './TranslatedText'
+import Title from './Title'
+import Modal from './Modal'
 
 export { Title, Navbar, LanguagePick, TextInput, Modal, Loader, TranslatedText }

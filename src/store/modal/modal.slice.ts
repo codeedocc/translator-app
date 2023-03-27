@@ -4,14 +4,12 @@ interface IInitialState {
   isOpenLanguage: boolean
   isOpenAddFav: boolean
   favName: string
-  checkFav: boolean
 }
 
 const initialState: IInitialState = {
   isOpenLanguage: false,
   isOpenAddFav: false,
   favName: '',
-  checkFav: false,
 }
 
 export const modalSlice = createSlice({
@@ -30,9 +28,6 @@ export const modalSlice = createSlice({
     },
     setFavName: (state, action) => {
       state.favName = action.payload
-    },
-    setCheckFav: (state, action) => {
-      state.checkFav = action.payload
     },
   },
 })

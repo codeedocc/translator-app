@@ -1,32 +1,37 @@
 import { GrFormClose } from 'react-icons/gr'
 import { infoFav } from '../assets/icons'
-import { useActions } from '../hooks/actions'
-import { useAppSelector } from '../hooks/redux'
 import { Modal } from './'
 import { FavText } from '../models/model'
 
-const TranslatedText: React.FC<FavText> = ({
+interface ITranslatedText extends FavText {
+  handleInfoClick: (id: number) => void
+  handleCloseModal: () => void
+  isOpenFav: boolean
+}
+
+const TranslatedText: React.FC<ITranslatedText> = ({
   to,
   from,
   word,
   translatedWord,
   title,
+  isOpenFav,
+  handleInfoClick,
+  handleCloseModal,
+  id,
 }) => {
-  const { setCheckFav } = useActions()
-  const { checkFav } = useAppSelector((state) => state.modal)
-
   return (
     <>
-      <div className="info-text" onClick={() => setCheckFav(true)}>
+      <div className="info-text" onClick={() => handleInfoClick(id!)}>
         <div className="info-wrapper">
           <p>{title}</p>
-          <img src={infoFav} alt="" />
+          <img src={infoFav} alt={title} />
         </div>
       </div>
-      {checkFav && (
-        <Modal>
+      {isOpenFav && (
+        <Modal isOpenFav={isOpenFav}>
           <div className="exit">
-            <button onClick={() => setCheckFav(false)}>
+            <button onClick={handleCloseModal}>
               <GrFormClose />
             </button>
           </div>

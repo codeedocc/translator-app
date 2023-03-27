@@ -155,5 +155,5 @@ export interface FavText {
   translatedWord: string
   from: string
   to: string
-  id?: number
+  id: number
 }

@@ -1,12 +1,12 @@
-import { copy, cross, favourite } from '../assets/icons'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
+import { copy, cross, favourite } from '../assets/icons'
 import { TranslatedResponse } from '../models/model'
+import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
-import { useActions } from '../hooks/actions'
-import { useEffect, useRef } from 'react'
 import { Loader, Modal } from './'
 import { GrFormClose } from 'react-icons/gr'
+import { useActions } from '../hooks/actions'
 
 interface ITextInput {
   getTranslate?: () => void
@@ -22,9 +22,11 @@ const TextInput: React.FC<ITextInput> = ({
   isLoading,
 }) => {
   const { setClearTranslation, setIsOpenAddFav, setFavName } = useActions()
-  const { chosenCountry } = useAppSelector((state) => state.country)
+
   const { clearTranslation, word } = useAppSelector((state) => state.language)
   const { isOpenAddFav, favName } = useAppSelector((state) => state.modal)
+  const { chosenCountry } = useAppSelector((state) => state.country)
+
   const textRef = useRef<HTMLTextAreaElement | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -73,10 +75,12 @@ const TextInput: React.FC<ITextInput> = ({
               <GrFormClose />
             </button>
           </div>
+
           <div className="modal-sides">
             <div className="modal-title">
               <p>Как назвать?</p>
             </div>
+
             <div className="modal-input">
               <input
                 type="text"
@@ -95,8 +99,10 @@ const TextInput: React.FC<ITextInput> = ({
             <span>
               <p>{chosenCountry.from.country}</p>
             </span>
+
             <img src={cross} alt="" onClick={() => setWord!('')} />
           </div>
+
           <div className="text">
             <textarea
               placeholder="Начните печатать..."
@@ -105,6 +111,7 @@ const TextInput: React.FC<ITextInput> = ({
               ref={textRef}
             />
           </div>
+
           <div className="footer">
             {word && <button onClick={getTranslate}>Перевести</button>}
           </div>
@@ -115,12 +122,14 @@ const TextInput: React.FC<ITextInput> = ({
             <span>
               <p>{chosenCountry.to.country}</p>
             </span>
+
             <img
               src={cross}
               alt=""
               onClick={() => setClearTranslation(!clearTranslation)}
             />
           </div>
+
           <div className="text">
             {isLoading ? (
               <Loader />
@@ -138,6 +147,7 @@ const TextInput: React.FC<ITextInput> = ({
               />
             )}
           </div>
+
           <div className="footer">
             {translatedWord?.data.translatedText && (
               <div>
@@ -146,20 +156,24 @@ const TextInput: React.FC<ITextInput> = ({
                   style={{ display: 'none' }}
                   onClick={() => handleCopy()}
                 />
+
                 <button
                   id="fav"
                   style={{ display: 'none' }}
                   onClick={() => setIsOpenAddFav(true)}
                 />
+
                 <label htmlFor="copying">
                   <img src={copy} />
                 </label>
+
                 <label htmlFor="fav">
                   <img src={favourite} />
                 </label>
               </div>
             )}
           </div>
+
           <div className="toaster">
             <Toaster
               containerStyle={{

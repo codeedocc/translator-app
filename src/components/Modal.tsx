@@ -4,25 +4,26 @@ import { ReactNode } from 'react'
 
 interface IModal {
   children: ReactNode
+  isOpenFav?: boolean
 }
 
-const Modal: React.FC<IModal> = ({ children }) => {
+const Modal: React.FC<IModal> = ({ children, isOpenFav }) => {
   const { closeAllModals } = useActions()
-  const { isOpenLanguage, isOpenAddFav, checkFav } = useAppSelector(
+  const { isOpenLanguage, isOpenAddFav } = useAppSelector(
     (state) => state.modal
   )
 
   return (
     <div
       className={
-        isOpenLanguage || isOpenAddFav || checkFav
+        isOpenLanguage || isOpenAddFav || isOpenFav
           ? 'modal-wrapper open'
           : 'modal-wrapper'
       }
       onClick={() => closeAllModals(false)}
     >
       <div
-        className={checkFav ? 'modal description' : 'modal'}
+        className={isOpenFav ? 'modal description' : 'modal'}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

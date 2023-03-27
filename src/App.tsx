@@ -5,7 +5,11 @@ const App: React.FC = () => {
   return (
     <div className="wrapper">
       <Title />
-      <Pages />
+
+      <div className="content">
+        <Pages />
+      </div>
+
       <Navbar />
     </div>
   )

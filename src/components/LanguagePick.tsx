@@ -25,12 +25,14 @@ const LanguagePick: React.FC = () => {
         <img src={chosenCountry.from.flag} alt="" />
         <p>{chosenCountry.from.country}</p>
       </span>
+
       <img
         src={changer}
         alt=""
         className="changer"
         onClick={() => switchLanguages()}
       />
+
       <span onClick={() => setIsOpenLanguage(!isOpenLanguage)}>
         <p>{chosenCountry.to.country}</p>
         <img src={chosenCountry.to.flag} alt="" />

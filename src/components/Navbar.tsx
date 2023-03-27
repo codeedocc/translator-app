@@ -15,6 +15,7 @@ const Navbar: React.FC = () => {
                   height: item.name === 'Лого' ? '48px' : '28px',
                   width: item.name === 'Лого' ? '48px' : '28px',
                 }}
+                className={item.name !== 'Лого' ? 'links' : ''}
               />
               <p>{item.name !== 'Лого' && item.name}</p>
             </span>

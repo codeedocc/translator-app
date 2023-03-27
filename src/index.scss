@@ -47,6 +47,12 @@
   position: relative;
 
   .title {
+    background: #003366;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     @include pc {
       justify-content: flex-start;
       padding-left: 40px;
@@ -57,12 +63,6 @@
         display: none;
       }
     }
-
-    background: #003366;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     .links {
       cursor: pointer;
@@ -119,10 +119,6 @@
         ),
         #fffbfe;
 
-      @include mobile {
-        width: 85vw;
-      }
-
       &.description {
         height: auto;
         max-height: 60%;
@@ -132,6 +128,10 @@
         @include mobile {
           width: 85vw;
         }
+      }
+
+      @include mobile {
+        width: 85vw;
       }
 
       .info-from {
@@ -295,14 +295,14 @@
 
   .content {
     position: relative;
-    height: calc(100% - 140px);
     background-color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: fixed;
+    overflow: auto;
     width: 100%;
     padding-top: 20px;
+    height: 80vh;
 
     p {
       font-size: 24px;
@@ -310,14 +310,6 @@
     }
 
     .language {
-      @include pc {
-        width: 60%;
-      }
-
-      @include tablet {
-        width: 60%;
-      }
-
       width: calc(100% - 40px);
       height: 47px;
       background: linear-gradient(
@@ -331,6 +323,14 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+
+      @include pc {
+        width: 60%;
+      }
+
+      @include tablet {
+        width: 60%;
+      }
 
       p {
         font-family: 'Roboto';
@@ -360,14 +360,6 @@
     }
 
     .text-input {
-      @include pc {
-        width: 60%;
-      }
-
-      @include tablet {
-        width: 80%;
-      }
-
       width: calc(100% - 70px);
       height: 35%;
       background: linear-gradient(
@@ -382,6 +374,14 @@
       position: relative;
       padding-right: 15px;
       padding-left: 15px;
+
+      @include pc {
+        width: 60%;
+      }
+
+      @include tablet {
+        width: 80%;
+      }
 
       .header {
         display: flex;
@@ -498,57 +498,54 @@
         }
       }
     }
-  }
 
-  .info {
-    position: relative;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: fixed;
-    width: 100%;
-    padding-top: 20px;
+    .info {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      padding-bottom: 50px;
 
-    .info-text {
-      @include pc {
-        width: 60%;
-      }
+      .info-text {
+        width: calc(100% - 70px);
+        height: 90px;
+        background: linear-gradient(
+            0deg,
+            rgba(103, 80, 164, 0.05),
+            rgba(103, 80, 164, 0.05)
+          ),
+          #fffbfe;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 16px;
+        margin-top: 26px;
+        position: relative;
+        padding-right: 15px;
+        padding-left: 15px;
+        cursor: pointer;
 
-      @include tablet {
-        width: 80%;
-      }
+        @include pc {
+          width: 60%;
+        }
 
-      width: calc(100% - 70px);
-      height: 90px;
-      background: linear-gradient(
-          0deg,
-          rgba(103, 80, 164, 0.05),
-          rgba(103, 80, 164, 0.05)
-        ),
-        #fffbfe;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      border-radius: 16px;
-      margin-top: 26px;
-      position: relative;
-      padding-right: 15px;
-      padding-left: 15px;
-      cursor: pointer;
+        @include tablet {
+          width: 80%;
+        }
 
-      .info-wrapper {
-        display: flex;
-        padding: 14px;
-        justify-content: space-between;
-        align-items: center;
-        height: calc(100% - 26px);
+        .info-wrapper {
+          display: flex;
+          padding: 14px;
+          justify-content: space-between;
+          align-items: center;
+          height: calc(100% - 26px);
 
-        p {
-          font-family: 'Roboto';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 18px;
-          line-height: 19px;
-          color: #003366;
+          p {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 19px;
+            color: #003366;
+          }
         }
       }
     }
@@ -561,7 +558,7 @@
     position: fixed;
     width: 100%;
     bottom: 0;
-    height: 80px;
+    height: 9.8vh;
     background: linear-gradient(
         0deg,
         rgba(103, 80, 164, 0.05),
@@ -588,8 +585,12 @@
 
       &.active {
         p {
-          text-decoration: underline;
           color: #003366;
+        }
+
+        .links {
+          filter: invert(40%) sepia(90%) saturate(850%) hue-rotate(178deg)
+            brightness(75%) contrast(122%);
         }
       }
     }

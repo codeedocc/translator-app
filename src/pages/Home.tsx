@@ -2,20 +2,21 @@ import {
   useGetLanguagesQuery,
   useGetTranslateMutation,
 } from '../store/language/language.api'
-import { useSearchCountriesQuery } from '../store/country/country.api'
 import { LanguagePick, Modal, TextInput } from '../components'
+import { useSearchCountriesQuery } from '../store/country/country.api'
 import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
+import { GrFormClose } from 'react-icons/gr'
 import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
-import { GrFormClose } from 'react-icons/gr'
 
 const Home: React.FC = () => {
   const { setWord, setClearTranslation, setIsOpenLanguage, setChosenCountry } =
     useActions()
+
+  const { chosenCountry } = useAppSelector((state) => state.country)
   const { isOpenLanguage } = useAppSelector((state) => state.modal)
   const { word } = useAppSelector((state) => state.language)
-  const { chosenCountry } = useAppSelector((state) => state.country)
 
   const dataRef = useRef<CountryList[]>([])
   const availableLanguages = useRef<CountryList[]>([])
@@ -136,7 +137,7 @@ const Home: React.FC = () => {
   }, [countries])
 
   return (
-    <div className="content">
+    <>
       {isOpenLanguage && (
         <Modal>
           <div className="exit">
@@ -144,6 +145,7 @@ const Home: React.FC = () => {
               <GrFormClose />
             </button>
           </div>
+
           <div className="modal-sides">
             <div className="modal-from">
               <p>С какого языка?</p>
@@ -155,6 +157,7 @@ const Home: React.FC = () => {
                 ))}
               </select>
             </div>
+
             <div className="modal-to">
               <p>На какой язык?</p>
               <select onChange={(e) => changeLanguage(e).to()}>
@@ -171,7 +174,7 @@ const Home: React.FC = () => {
       <LanguagePick />
       <TextInput getTranslate={getTranslate} setWord={setWord} />
       <TextInput translatedWord={translatedWord} isLoading={isLoading} />
-    </div>
+    </>
   )
 }
 
