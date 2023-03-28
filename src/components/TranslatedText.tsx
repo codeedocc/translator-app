@@ -7,6 +7,7 @@ interface ITranslatedText extends FavText {
   handleInfoClick: (id: number) => void
   handleCloseModal: () => void
   isOpenFav: boolean
+  removeFav: (id: string) => void
 }
 
 const TranslatedText: React.FC<ITranslatedText> = ({
@@ -18,14 +19,18 @@ const TranslatedText: React.FC<ITranslatedText> = ({
   isOpenFav,
   handleInfoClick,
   handleCloseModal,
+  removeFav,
   id,
 }) => {
   return (
     <>
-      <div className="info-text" onClick={() => handleInfoClick(id!)}>
+      <div className="info-text">
         <div className="info-wrapper">
-          <p>{title}</p>
-          <img src={infoFav} alt={title} />
+          <p onClick={() => handleInfoClick(id!)}>{title}</p>
+          <button id="infoFav" style={{ display: 'none' }} />
+          <label htmlFor="infoFav">
+            <img src={infoFav} alt={title} onClick={() => removeFav(title)} />
+          </label>
         </div>
       </div>
       {isOpenFav && (

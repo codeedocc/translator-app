@@ -506,6 +506,41 @@
       width: 100%;
       padding-bottom: 50px;
 
+      .info-empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        img {
+          height: 150px;
+          width: 150px;
+          animation: pulse 2s infinite;
+          cursor: pointer;
+        }
+
+        p {
+          padding: 20px;
+
+          @include mobile {
+            font-size: 15px;
+          }
+        }
+      }
+
       .info-text {
         width: calc(100% - 70px);
         height: 90px;
@@ -521,7 +556,6 @@
         position: relative;
         padding-right: 15px;
         padding-left: 15px;
-        cursor: pointer;
 
         @include pc {
           width: 60%;
@@ -538,6 +572,10 @@
           align-items: center;
           height: calc(100% - 26px);
 
+          img {
+            cursor: pointer;
+          }
+
           p {
             font-family: 'Roboto';
             font-style: normal;
@@ -545,6 +583,7 @@
             font-size: 18px;
             line-height: 19px;
             color: #003366;
+            cursor: pointer;
           }
         }
       }

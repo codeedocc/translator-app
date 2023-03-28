@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { TranslatedText } from '../components'
 import { useActions } from '../hooks/actions'
+import { emptyFav } from '../assets/icons'
+import { useNavigate } from 'react-router-dom'
 
 const Favourite: React.FC = () => {
+  const navigate = useNavigate()
+
   const [openModalId, setOpenModalId] = useState<number | null>(null)
 
   const { setFavText } = useActions()
@@ -15,6 +19,11 @@ const Favourite: React.FC = () => {
 
   const handleCloseModal = () => {
     setOpenModalId(null)
+  }
+
+  const removeFav = (title: string) => {
+    setFavText(favText.filter((el) => el.title !== title))
+    localStorage.removeItem(title)
   }
 
   useEffect(() => {
@@ -29,6 +38,19 @@ const Favourite: React.FC = () => {
 
   return (
     <div className="info">
+      {favText.length === 0 && (
+        <div className="info-empty">
+          <button
+            id="empty"
+            style={{ display: 'none' }}
+            onClick={() => navigate('/')}
+          />
+          <label htmlFor="empty">
+            <img src={emptyFav} alt="" />
+          </label>
+          <p>В избранном ничего нет, добавьте что-нибудь.</p>
+        </div>
+      )}
       {favText.map((el) => {
         return (
           <TranslatedText
@@ -42,6 +64,7 @@ const Favourite: React.FC = () => {
             handleInfoClick={handleInfoClick}
             handleCloseModal={handleCloseModal}
             isOpenFav={openModalId === el.id}
+            removeFav={removeFav}
           />
         )
       })}
