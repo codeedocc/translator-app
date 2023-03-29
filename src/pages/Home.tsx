@@ -9,8 +9,14 @@ import { useAppSelector } from '../hooks/redux'
 import { GrFormClose } from 'react-icons/gr'
 import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
+import { useState } from 'react'
+import Select from 'react-select'
 
 const Home: React.FC = () => {
+  const [options, setOptions] = useState<CountryList[]>([])
+  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
+  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
+
   const { setWord, setClearTranslation, setIsOpenLanguage, setChosenCountry } =
     useActions()
 
@@ -31,8 +37,8 @@ const Home: React.FC = () => {
       setClearTranslation(false)
 
       await getTranslation({
-        from: chosenCountry.from.abbreviation.toLowerCase(),
-        to: chosenCountry.to.abbreviation.toLowerCase(),
+        from: chosenCountry.from.value.toLowerCase(),
+        to: chosenCountry.to.value.toLowerCase(),
         text: word,
       })
     } catch (error) {
@@ -44,8 +50,8 @@ const Home: React.FC = () => {
     if (countries && languages) {
       const result: CountryList[] = [
         {
-          abbreviation: 'en',
-          country: 'Америка',
+          value: 'en',
+          label: 'Америка',
           flag: 'https://flagcdn.com/us.svg',
         },
       ]
@@ -61,8 +67,8 @@ const Home: React.FC = () => {
       const flags = countries?.map((el) => el.flags[0])
 
       const countryList = abbreviation?.map((abbr, index) => ({
-        abbreviation: abbr,
-        country: country![index],
+        value: abbr,
+        label: country![index],
         flag: flags[index],
       }))
 
@@ -78,10 +84,10 @@ const Home: React.FC = () => {
         for (let i = 0; i < languages.length; i++) {
           const language = languages[i]
 
-          if (el.abbreviation === language) {
+          if (el.value === language) {
             result.push({
-              abbreviation: el.abbreviation,
-              country: el.country,
+              value: el.value,
+              label: el.label,
               flag: el.flag,
             })
           }
@@ -89,23 +95,20 @@ const Home: React.FC = () => {
       })
 
       availableLanguages.current = result
+      setOptions(availableLanguages.current)
     }
   }
 
-  const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const changeLanguage = (e: any) => {
     return {
       from() {
         setChosenCountry({
           ...chosenCountry,
           from: {
             ...chosenCountry.from,
-            abbreviation: e.target.value,
-            country: availableLanguages.current.find(
-              (el) => el.abbreviation === e.target.value
-            )?.country,
-            flag: availableLanguages.current.find(
-              (el) => el.abbreviation === e.target.value
-            )?.flag,
+            value: e.value,
+            label: options.find((el) => el.label === e.label)?.label,
+            flag: options.find((el) => el.value === e.value)?.flag,
           },
         })
 
@@ -117,18 +120,42 @@ const Home: React.FC = () => {
           ...chosenCountry,
           to: {
             ...chosenCountry.to,
-            abbreviation: e.target.value,
-            country: availableLanguages.current.find(
-              (el) => el.abbreviation === e.target.value
-            )?.country,
-            flag: availableLanguages.current.find(
-              (el) => el.abbreviation === e.target.value
-            )?.flag,
+            value: e.value,
+            label: options.find((el) => el.label === e.label)?.label,
+            flag: options.find((el) => el.value === e.value)?.flag,
           },
         })
 
         setClearTranslation(true)
       },
+    }
+  }
+
+  const getValue = (side: string) => {
+    if (side === 'from') {
+      return currentCountryFrom
+        ? options.find((el) => el.value === currentCountryFrom)
+        : ''
+    }
+
+    if (side === 'to') {
+      return currentCountryTo
+        ? options.find((el) => el.value === currentCountryTo)
+        : ''
+    }
+  }
+
+  const onChange = (e: any, side: string) => {
+    if (side === 'from') {
+      setCurrentCountryFrom(e.value)
+      changeLanguage(e).from()
+      return
+    }
+
+    if (side === 'to') {
+      setCurrentCountryTo(e.value)
+      changeLanguage(e).to()
+      return
     }
   }
 
@@ -149,28 +176,31 @@ const Home: React.FC = () => {
           <div className="modal-sides">
             <div className="modal-from">
               <p>С какого языка?</p>
-              <select onChange={(e) => changeLanguage(e).from()}>
-                {availableLanguages?.current.map((el) => (
-                  <option value={el.abbreviation} key={el.country}>
-                    {el.country}
-                  </option>
-                ))}
-              </select>
+              {options && (
+                <Select
+                  onChange={(e) => onChange(e, 'from')}
+                  value={getValue('from')}
+                  options={options}
+                  className="select"
+                />
+              )}
             </div>
 
             <div className="modal-to">
               <p>На какой язык?</p>
-              <select onChange={(e) => changeLanguage(e).to()}>
-                {availableLanguages?.current.map((el) => (
-                  <option value={el.abbreviation} key={el.country}>
-                    {el.country}
-                  </option>
-                ))}
-              </select>
+              {options && (
+                <Select
+                  onChange={(e) => onChange(e, 'to')}
+                  value={getValue('to')}
+                  options={options}
+                  className="select"
+                />
+              )}
             </div>
           </div>
         </Modal>
       )}
+
       <LanguagePick />
       <TextInput getTranslate={getTranslate} setWord={setWord} />
       <TextInput translatedWord={translatedWord} isLoading={isLoading} />

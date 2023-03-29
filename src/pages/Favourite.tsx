@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { TranslatedText } from '../components'
+import { useNavigate } from 'react-router-dom'
 import { useActions } from '../hooks/actions'
 import { emptyFav } from '../assets/icons'
-import { useNavigate } from 'react-router-dom'
 
 const Favourite: React.FC = () => {
   const navigate = useNavigate()
@@ -51,6 +51,7 @@ const Favourite: React.FC = () => {
           <p>В избранном ничего нет, добавьте что-нибудь.</p>
         </div>
       )}
+
       {favText.map((el) => {
         return (
           <TranslatedText

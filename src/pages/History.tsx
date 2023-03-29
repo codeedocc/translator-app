@@ -9,6 +9,10 @@ const History: React.FC = () => {
     console.log(null)
   }
 
+  const removeFav = () => {
+    console.log(null)
+  }
+
   return (
     <div className="info">
       <TranslatedText
@@ -22,6 +26,7 @@ const History: React.FC = () => {
         handleInfoClick={handleInfoClick}
         handleCloseModal={handleCloseModal}
         isOpenFav={false}
+        removeFav={removeFav}
       />
     </div>
   )

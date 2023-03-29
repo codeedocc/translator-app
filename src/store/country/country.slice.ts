@@ -8,13 +8,13 @@ interface IInitialState {
 const initialState: IInitialState = {
   chosenCountry: {
     from: {
-      abbreviation: 'ru',
-      country: 'Россия',
+      value: 'ru',
+      label: 'Россия',
       flag: 'https://flagcdn.com/ru.svg',
     },
     to: {
-      abbreviation: 'en',
-      country: 'Америка',
+      value: 'en',
+      label: 'Америка',
       flag: 'https://flagcdn.com/us.svg',
     },
   },

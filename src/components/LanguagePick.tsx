@@ -23,7 +23,7 @@ const LanguagePick: React.FC = () => {
     <div className="language">
       <span onClick={() => setIsOpenLanguage(!isOpenLanguage)}>
         <img src={chosenCountry.from.flag} alt="" />
-        <p>{chosenCountry.from.country}</p>
+        <p>{chosenCountry.from.label}</p>
       </span>
 
       <img
@@ -34,7 +34,7 @@ const LanguagePick: React.FC = () => {
       />
 
       <span onClick={() => setIsOpenLanguage(!isOpenLanguage)}>
-        <p>{chosenCountry.to.country}</p>
+        <p>{chosenCountry.to.label}</p>
         <img src={chosenCountry.to.flag} alt="" />
       </span>
     </div>

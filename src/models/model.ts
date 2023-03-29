@@ -126,8 +126,8 @@ export interface Data {
 }
 
 export interface CountryList {
-  abbreviation: string
-  country: string
+  value: string
+  label: string
   flag: string
 }
 

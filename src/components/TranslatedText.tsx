@@ -1,7 +1,7 @@
 import { GrFormClose } from 'react-icons/gr'
+import { FavText } from '../models/model'
 import { infoFav } from '../assets/icons'
 import { Modal } from './'
-import { FavText } from '../models/model'
 
 interface ITranslatedText extends FavText {
   handleInfoClick: (id: number) => void

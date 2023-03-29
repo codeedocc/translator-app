@@ -41,8 +41,8 @@ const TextInput: React.FC<ITextInput> = ({
       title: favName,
       word: word,
       translatedWord: translatedWord?.data.translatedText,
-      from: chosenCountry.from.abbreviation,
-      to: chosenCountry.to.abbreviation,
+      from: chosenCountry.from.value,
+      to: chosenCountry.to.value,
       id: Date.now(),
     }
 
@@ -97,7 +97,7 @@ const TextInput: React.FC<ITextInput> = ({
         <div className="text-input">
           <div className="header">
             <span>
-              <p>{chosenCountry.from.country}</p>
+              <p>{chosenCountry.from.label}</p>
             </span>
 
             <img src={cross} alt="" onClick={() => setWord!('')} />
@@ -120,7 +120,7 @@ const TextInput: React.FC<ITextInput> = ({
         <div className="text-input">
           <div className="header">
             <span>
-              <p>{chosenCountry.to.country}</p>
+              <p>{chosenCountry.to.label}</p>
             </span>
 
             <img
