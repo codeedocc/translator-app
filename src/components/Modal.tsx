@@ -9,21 +9,27 @@ interface IModal {
 
 const Modal: React.FC<IModal> = ({ children, isOpenFav }) => {
   const { closeAllModals } = useActions()
-  const { isOpenLanguage, isOpenAddFav } = useAppSelector(
+  const { isOpenLanguage, isOpenAddFav, isRemovingFav } = useAppSelector(
     (state) => state.modal
   )
 
   return (
     <div
       className={
-        isOpenLanguage || isOpenAddFav || isOpenFav
+        isOpenLanguage || isOpenAddFav || isOpenFav || isRemovingFav
           ? 'modal-wrapper open'
           : 'modal-wrapper'
       }
       onClick={() => closeAllModals(false)}
     >
       <div
-        className={isOpenFav ? 'modal description' : 'modal'}
+        className={
+          isOpenFav
+            ? 'modal description'
+            : isRemovingFav
+            ? 'modal removing'
+            : 'modal'
+        }
         onClick={(e) => e.stopPropagation()}
       >
         {children}
