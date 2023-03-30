@@ -22,8 +22,12 @@ const Favourite: React.FC = () => {
   }
 
   const removeFav = (title: string) => {
-    setFavText(favText.filter((el) => el.title !== title))
-    localStorage.removeItem(title)
+    const youSure = window.confirm('Удалить из избранного?')
+
+    if (youSure) {
+      setFavText(favText.filter((el) => el.title !== title))
+      localStorage.removeItem(title)
+    }
   }
 
   useEffect(() => {

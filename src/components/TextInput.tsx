@@ -1,7 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { copy, cross, favourite } from '../assets/icons'
 import { TranslatedResponse } from '../models/model'
-import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { Loader, Modal } from './'
@@ -21,6 +21,9 @@ const TextInput: React.FC<ITextInput> = ({
   translatedWord,
   isLoading,
 }) => {
+  const [alertEmpty, setAlertEmpty] = useState<boolean>(false)
+  const [alertExists, setAlertExists] = useState<boolean>(false)
+
   const { setClearTranslation, setIsOpenAddFav, setFavName } = useActions()
 
   const { clearTranslation, word } = useAppSelector((state) => state.language)
@@ -37,23 +40,46 @@ const TextInput: React.FC<ITextInput> = ({
   }
 
   const handeAddFav = () => {
-    const favourite = {
-      title: favName,
-      word: word,
-      translatedWord: translatedWord?.data.translatedText,
-      from: chosenCountry.from.value,
-      to: chosenCountry.to.value,
-      id: Date.now(),
+    const keys = Object.keys(localStorage)
+    const keyExists = keys.find((el) => el === favName)
+
+    if (!keyExists && favName.trim() !== '') {
+      const favourite = {
+        title: favName,
+        word: word,
+        translatedWord: translatedWord?.data.translatedText,
+        from: chosenCountry.from.value,
+        to: chosenCountry.to.value,
+        id: Date.now(),
+      }
+
+      localStorage.setItem(favName, JSON.stringify(favourite))
+      setFavName('')
+      setIsOpenAddFav(false)
+
+      toast('Добавлено в избранное', {
+        duration: 2000,
+        icon: '❤️',
+      })
+
+      return
     }
 
-    localStorage.setItem(favName, JSON.stringify(favourite))
-    setFavName('')
-    setIsOpenAddFav(false)
+    if (favName.trim() === '') {
+      setAlertEmpty(true)
+      setAlertExists(false)
+      return
+    }
 
-    toast('Добавлено в избранное', {
-      duration: 2000,
-      icon: '❤️',
-    })
+    setAlertEmpty(false)
+    setAlertExists(true)
+  }
+
+  const openFavModal = () => {
+    setFavName('')
+    setAlertEmpty(false)
+    setAlertExists(false)
+    setIsOpenAddFav(true)
   }
 
   useEffect(() => {
@@ -88,6 +114,12 @@ const TextInput: React.FC<ITextInput> = ({
                 value={favName}
                 onChange={(e) => setFavName(e.target.value)}
               />
+              {alertEmpty && (
+                <p style={{ color: 'red' }}>Название не может быть пустым.</p>
+              )}
+              {alertExists && (
+                <p style={{ color: 'red' }}>Такое название уже существует.</p>
+              )}
               <button onClick={handeAddFav}>ОК</button>
             </div>
           </div>
@@ -160,7 +192,7 @@ const TextInput: React.FC<ITextInput> = ({
                 <button
                   id="fav"
                   style={{ display: 'none' }}
-                  onClick={() => setIsOpenAddFav(true)}
+                  onClick={() => openFavModal()}
                 />
 
                 <label htmlFor="copying">
