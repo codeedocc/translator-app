@@ -4,28 +4,34 @@ import {
 } from '../store/language/language.api'
 import { LanguagePick, Modal, TextInput } from '../components'
 import { useSearchCountriesQuery } from '../store/country/country.api'
+import { CountryList, History } from '../models/model'
 import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { GrFormClose } from 'react-icons/gr'
-import { CountryList } from '../models/model'
 import { useActions } from '../hooks/actions'
 import { useState } from 'react'
 import Select from 'react-select'
 
 const Home: React.FC = () => {
   const [options, setOptions] = useState<CountryList[]>([])
-  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
-  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
-
-  const { setWord, setClearTranslation, setIsOpenLanguage, setChosenCountry } =
-    useActions()
-
-  const { chosenCountry } = useAppSelector((state) => state.country)
-  const { isOpenLanguage } = useAppSelector((state) => state.modal)
-  const { word } = useAppSelector((state) => state.language)
 
   const dataRef = useRef<CountryList[]>([])
   const availableLanguages = useRef<CountryList[]>([])
+
+  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
+  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
+
+  const {
+    setWord,
+    setClearTranslation,
+    setIsOpenLanguage,
+    setChosenCountry,
+    setHistoryText,
+  } = useActions()
+
+  const { chosenCountry } = useAppSelector((state) => state.country)
+  const { isOpenLanguage } = useAppSelector((state) => state.modal)
+  const { word, historyText } = useAppSelector((state) => state.language)
 
   const [getTranslation, { data: translatedWord, isLoading }] =
     useGetTranslateMutation()
@@ -145,7 +151,7 @@ const Home: React.FC = () => {
     }
   }
 
-  const onChange = (e: any, side: string) => {
+  const onChangeSelect = (e: any, side: string) => {
     if (side === 'from') {
       setCurrentCountryFrom(e.value)
       changeLanguage(e).from()
@@ -158,6 +164,20 @@ const Home: React.FC = () => {
       return
     }
   }
+
+  useEffect(() => {
+    if (translatedWord?.data.translatedText) {
+      const history: History = {
+        word: word,
+        translatedWord: translatedWord!.data.translatedText,
+        from: chosenCountry.from.value.toLowerCase(),
+        to: chosenCountry.to.value.toLowerCase(),
+        id: Date.now(),
+      }
+      setHistoryText(historyText.concat(history))
+      localStorage.setItem(`history - ${history.id}`, JSON.stringify(history))
+    }
+  }, [translatedWord])
 
   useEffect(() => {
     getCountries()
@@ -178,7 +198,7 @@ const Home: React.FC = () => {
               <p>С какого языка?</p>
               {options && (
                 <Select
-                  onChange={(e) => onChange(e, 'from')}
+                  onChange={(e) => onChangeSelect(e, 'from')}
                   value={getValue('from')}
                   options={options}
                   className="select"
@@ -190,7 +210,7 @@ const Home: React.FC = () => {
               <p>На какой язык?</p>
               {options && (
                 <Select
-                  onChange={(e) => onChange(e, 'to')}
+                  onChange={(e) => onChangeSelect(e, 'to')}
                   value={getValue('to')}
                   options={options}
                   className="select"

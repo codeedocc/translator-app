@@ -9,14 +9,17 @@ interface IModal {
 
 const Modal: React.FC<IModal> = ({ children, isOpenFav }) => {
   const { closeAllModals } = useActions()
-  const { isOpenLanguage, isOpenAddFav, isRemovingFav } = useAppSelector(
-    (state) => state.modal
-  )
+  const { isOpenLanguage, isOpenAddFav, isRemovingFav, isRemovingHistory } =
+    useAppSelector((state) => state.modal)
 
   return (
     <div
       className={
-        isOpenLanguage || isOpenAddFav || isOpenFav || isRemovingFav
+        isOpenLanguage ||
+        isOpenAddFav ||
+        isOpenFav ||
+        isRemovingFav ||
+        isRemovingHistory
           ? 'modal-wrapper open'
           : 'modal-wrapper'
       }
@@ -26,7 +29,7 @@ const Modal: React.FC<IModal> = ({ children, isOpenFav }) => {
         className={
           isOpenFav
             ? 'modal description'
-            : isRemovingFav
+            : isRemovingFav || isRemovingHistory
             ? 'modal removing'
             : 'modal'
         }

@@ -41,7 +41,7 @@ const TextInput: React.FC<ITextInput> = ({
 
   const handeAddFav = () => {
     const keys = Object.keys(localStorage)
-    const keyExists = keys.find((el) => el === favName)
+    const keyExists = keys.find((el) => el === `favourite - ${favName}`)
 
     if (!keyExists && favName.trim() !== '') {
       const favourite = {
@@ -53,7 +53,8 @@ const TextInput: React.FC<ITextInput> = ({
         id: Date.now(),
       }
 
-      localStorage.setItem(favName, JSON.stringify(favourite))
+      // localStorage.setItem(favName, JSON.stringify(favourite))
+      localStorage.setItem(`favourite - ${favName}`, JSON.stringify(favourite))
       setFavName('')
       setIsOpenAddFav(false)
 

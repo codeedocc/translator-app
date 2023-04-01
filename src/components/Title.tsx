@@ -6,14 +6,18 @@ import { Modal } from './'
 import { logo } from '../assets/icons'
 
 const Title: React.FC = () => {
-  const { setFavText, setIsRemovingFav } = useActions()
-  const { favText } = useAppSelector((state) => state.language)
-  const { isRemovingFav } = useAppSelector((state) => state.modal)
-
   const navigate = useNavigate()
   const location = useLocation()
 
-  const checkStorage = () => {
+  const { setFavText, setIsRemovingFav, setHistoryText, setIsRemovingHistory } =
+    useActions()
+
+  const { favText, historyText } = useAppSelector((state) => state.language)
+  const { isRemovingFav, isRemovingHistory } = useAppSelector(
+    (state) => state.modal
+  )
+
+  const checkStorageFavourite = () => {
     if (location.pathname === '/favourite' && favText.length) {
       return true
     }
@@ -21,10 +25,34 @@ const Title: React.FC = () => {
     return false
   }
 
-  const storageRemover = () => {
-    localStorage.clear()
+  const checkStorageHistory = () => {
+    if (location.pathname === '/history' && historyText.length) {
+      return true
+    }
+
+    return false
+  }
+
+  const favouriteRemover = () => {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('favourite')) {
+        localStorage.removeItem(key)
+      }
+    })
+
     setFavText([])
     setIsRemovingFav(false)
+  }
+
+  const historyRemover = () => {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('history')) {
+        localStorage.removeItem(key)
+      }
+    })
+
+    setHistoryText([])
+    setIsRemovingHistory(false)
   }
 
   return (
@@ -50,7 +78,37 @@ const Title: React.FC = () => {
                 Отменить
               </button>
 
-              <button onClick={() => storageRemover()}>Удалить</button>
+              <button onClick={() => favouriteRemover()}>Удалить</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {isRemovingHistory && (
+        <Modal>
+          <div className="exit">
+            <button onClick={() => setIsRemovingHistory(false)}>
+              <GrFormClose />
+            </button>
+          </div>
+
+          <div className="modal-sides">
+            <div className="modal-title">
+              <p>
+                Всего элементов: <strong>{historyText.length}</strong>.
+              </p>
+              <p>Вы точно хотите очистить историю?</p>
+            </div>
+
+            <div className="modal-input">
+              <button
+                className="exit"
+                onClick={() => setIsRemovingHistory(false)}
+              >
+                Отменить
+              </button>
+
+              <button onClick={() => historyRemover()}>Удалить</button>
             </div>
           </div>
         </Modal>
@@ -62,13 +120,24 @@ const Title: React.FC = () => {
           <button onClick={() => navigate('/')}>Переводчик</button>
         </div>
 
-        {checkStorage() && (
+        {checkStorageFavourite() && (
           <div className="links">
             <button
               className="remove-fav"
               onClick={() => setIsRemovingFav(true)}
             >
               Удалить всё
+            </button>
+          </div>
+        )}
+
+        {checkStorageHistory() && (
+          <div className="links">
+            <button
+              className="remove-fav"
+              onClick={() => setIsRemovingHistory(true)}
+            >
+              Очистить историю
             </button>
           </div>
         )}

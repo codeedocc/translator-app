@@ -1,16 +1,16 @@
 import { GrFormClose } from 'react-icons/gr'
 import { FavText } from '../models/model'
 import { infoFav } from '../assets/icons'
-import { Modal } from './'
+import { Modal } from '.'
 
-interface ITranslatedText extends FavText {
+interface ISavedFav extends FavText {
   handleInfoClick: (id: number) => void
   handleCloseModal: () => void
   isOpenFav: boolean
   removeFav: (id: string) => void
 }
 
-const TranslatedText: React.FC<ITranslatedText> = ({
+const SavedFav: React.FC<ISavedFav> = ({
   to,
   from,
   word,
@@ -33,6 +33,7 @@ const TranslatedText: React.FC<ITranslatedText> = ({
           </label>
         </div>
       </div>
+
       {isOpenFav && (
         <Modal isOpenFav={isOpenFav}>
           <div className="exit">
@@ -40,13 +41,16 @@ const TranslatedText: React.FC<ITranslatedText> = ({
               <GrFormClose />
             </button>
           </div>
+
           <div className="info-from">
             <span>
               <p>{from}</p>
               <p>{word}</p>
             </span>
           </div>
+
           <div className="line" />
+
           <div className="info-to">
             <span>
               <p>{to}</p>
@@ -59,4 +63,4 @@ const TranslatedText: React.FC<ITranslatedText> = ({
   )
 }
 
-export default TranslatedText
+export default SavedFav

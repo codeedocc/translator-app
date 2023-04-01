@@ -534,6 +534,112 @@
       flex-direction: column;
       width: 100%;
       padding-bottom: 50px;
+      height: auto;
+
+      .history-wrapper {
+        width: calc(100% - 70px);
+
+        background: linear-gradient(
+            0deg,
+            rgba(103, 80, 164, 0.05),
+            rgba(103, 80, 164, 0.05)
+          ),
+          #fffbfe;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 16px;
+        margin-top: 26px;
+        position: relative;
+        padding-right: 15px;
+        padding-left: 15px;
+
+        @include pc {
+          width: 60%;
+        }
+
+        @include tablet {
+          width: 80%;
+        }
+
+        .info-from {
+          display: flex;
+          padding: 14px;
+          justify-content: space-between;
+
+          span {
+            display: flex;
+            gap: 30px;
+
+            p:first-child {
+              color: #000000;
+              font-family: 'Roboto';
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 19px;
+            }
+
+            p {
+              font-family: 'Roboto';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 19px;
+              color: #003366;
+            }
+          }
+        }
+
+        .line {
+          background: #969696;
+          height: 1px;
+        }
+
+        .info-to {
+          display: flex;
+          padding: 14px;
+          justify-content: space-between;
+
+          span {
+            display: flex;
+            gap: 30px;
+
+            p:first-child {
+              color: #000000;
+              font-family: 'Roboto';
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 19px;
+            }
+
+            p {
+              font-family: 'Roboto';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 19px;
+              color: #ff6600;
+            }
+          }
+        }
+
+        .exit {
+          padding-top: 10px;
+          padding-right: 20px;
+          display: flex;
+          justify-content: flex-end;
+
+          button {
+            background: none;
+            font-size: 20px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+        }
+      }
 
       .info-empty {
         display: flex;

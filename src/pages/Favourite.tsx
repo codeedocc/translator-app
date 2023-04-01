@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks/redux'
-import { TranslatedText } from '../components'
 import { useNavigate } from 'react-router-dom'
 import { useActions } from '../hooks/actions'
 import { emptyFav } from '../assets/icons'
+import { SavedFav } from '../components'
 
 const Favourite: React.FC = () => {
   const navigate = useNavigate()
@@ -11,6 +11,7 @@ const Favourite: React.FC = () => {
   const [openModalId, setOpenModalId] = useState<number | null>(null)
 
   const { setFavText } = useActions()
+
   const { favText } = useAppSelector((state) => state.language)
 
   const handleInfoClick = (id: number) => {
@@ -26,13 +27,15 @@ const Favourite: React.FC = () => {
 
     if (youSure) {
       setFavText(favText.filter((el) => el.title !== title))
-      localStorage.removeItem(title)
+      localStorage.removeItem(`favourite - ${title}`)
     }
   }
 
   useEffect(() => {
     const keys = Object.keys(localStorage)
-    const data = keys.map((key) =>
+    const favKeys = keys.filter((el) => el.startsWith('fav'))
+
+    const data = favKeys.map((key) =>
       JSON.parse(localStorage.getItem(key) || '[]')
     )
 
@@ -49,16 +52,18 @@ const Favourite: React.FC = () => {
             style={{ display: 'none' }}
             onClick={() => navigate('/')}
           />
+
           <label htmlFor="empty">
             <img src={emptyFav} alt="" />
           </label>
+
           <p>В избранном ничего нет, добавьте что-нибудь.</p>
         </div>
       )}
 
       {favText.map((el) => {
         return (
-          <TranslatedText
+          <SavedFav
             title={el.title}
             from={el.from}
             to={el.to}

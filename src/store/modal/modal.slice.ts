@@ -5,6 +5,7 @@ interface IInitialState {
   isOpenAddFav: boolean
   favName: string
   isRemovingFav: boolean
+  isRemovingHistory: boolean
 }
 
 const initialState: IInitialState = {
@@ -12,6 +13,7 @@ const initialState: IInitialState = {
   isOpenAddFav: false,
   favName: '',
   isRemovingFav: false,
+  isRemovingHistory: false,
 }
 
 export const modalSlice = createSlice({
@@ -29,6 +31,9 @@ export const modalSlice = createSlice({
     },
     setIsRemovingFav: (state, action) => {
       state.isRemovingFav = action.payload
+    },
+    setIsRemovingHistory: (state, action) => {
+      state.isRemovingHistory = action.payload
     },
     closeAllModals: (state, action) => {
       state.isOpenLanguage = action.payload

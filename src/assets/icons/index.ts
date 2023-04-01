@@ -1,3 +1,4 @@
+import historyPage from './history.png'
 import favourite from './favourite.svg'
 import pronounce from './pronounce.svg'
 import emptyFav from './emptyFav.png'
@@ -20,4 +21,5 @@ export {
   favLink,
   infoFav,
   emptyFav,
+  historyPage,
 }

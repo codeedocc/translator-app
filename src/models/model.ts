@@ -157,3 +157,11 @@ export interface FavText {
   to: string
   id: number
 }
+
+export interface History {
+  word: string
+  translatedWord: string
+  from: string
+  to: string
+  id: number
+}
