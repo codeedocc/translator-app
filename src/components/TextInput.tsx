@@ -53,7 +53,6 @@ const TextInput: React.FC<ITextInput> = ({
         id: Date.now(),
       }
 
-      // localStorage.setItem(favName, JSON.stringify(favourite))
       localStorage.setItem(`favourite - ${favName}`, JSON.stringify(favourite))
       setFavName('')
       setIsOpenAddFav(false)
@@ -156,11 +155,7 @@ const TextInput: React.FC<ITextInput> = ({
               <p>{chosenCountry.to.label}</p>
             </span>
 
-            <img
-              src={cross}
-              alt=""
-              onClick={() => setClearTranslation(!clearTranslation)}
-            />
+            <img src={cross} alt="" onClick={() => setClearTranslation(true)} />
           </div>
 
           <div className="text">

@@ -647,6 +647,8 @@
         justify-content: center;
         flex-direction: column;
         padding: 20px;
+        height: calc(100vh - 280px);
+        width: calc(100vw - 50px);
 
         @keyframes pulse {
           0% {

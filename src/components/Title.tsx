@@ -68,7 +68,7 @@ const Title: React.FC = () => {
           <div className="modal-sides">
             <div className="modal-title">
               <p>
-                Всего заметок: <strong>{favText.length}</strong>.
+                Всего элементов: <strong>{favText.length}</strong>.
               </p>
               <p>Вы точно хотите всё удалить?</p>
             </div>
@@ -108,16 +108,16 @@ const Title: React.FC = () => {
                 Отменить
               </button>
 
-              <button onClick={() => historyRemover()}>Удалить</button>
+              <button onClick={() => historyRemover()}>Очистить</button>
             </div>
           </div>
         </Modal>
       )}
 
       <div className="title">
-        <div className="links">
+        <div className="links" onClick={() => navigate('/')}>
           <img src={logo} alt="" />
-          <button onClick={() => navigate('/')}>Переводчик</button>
+          <button>Переводчик</button>
         </div>
 
         {checkStorageFavourite() && (
