@@ -18,7 +18,7 @@ const Title: React.FC = () => {
   )
 
   const checkStorageFavourite = () => {
-    if (location.pathname === '/favourite' && favText.length) {
+    if (location.pathname === '/translator-app/favourite' && favText.length) {
       return true
     }
 
@@ -26,7 +26,7 @@ const Title: React.FC = () => {
   }
 
   const checkStorageHistory = () => {
-    if (location.pathname === '/history' && historyText.length) {
+    if (location.pathname === '/translator-app/history' && historyText.length) {
       return true
     }
 
@@ -115,7 +115,7 @@ const Title: React.FC = () => {
       )}
 
       <div className="title">
-        <div className="links" onClick={() => navigate('/')}>
+        <div className="links" onClick={() => navigate('/translator-app')}>
           <img src={logo} alt="" />
           <button>Переводчик</button>
         </div>

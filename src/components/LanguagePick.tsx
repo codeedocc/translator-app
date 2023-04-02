@@ -4,6 +4,7 @@ import { changer } from '../assets/icons'
 
 const LanguagePick: React.FC = () => {
   const { setIsOpenLanguage, setChosenCountry } = useActions()
+
   const { isOpenLanguage } = useAppSelector((state) => state.modal)
   const { chosenCountry } = useAppSelector((state) => state.country)
 

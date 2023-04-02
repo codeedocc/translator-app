@@ -9,6 +9,7 @@ interface IModal {
 
 const Modal: React.FC<IModal> = ({ children, isOpenFav }) => {
   const { closeAllModals } = useActions()
+
   const { isOpenLanguage, isOpenAddFav, isRemovingFav, isRemovingHistory } =
     useAppSelector((state) => state.modal)
 

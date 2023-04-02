@@ -50,7 +50,7 @@ const Favourite: React.FC = () => {
           <button
             id="empty"
             style={{ display: 'none' }}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/translator-app')}
           />
 
           <label htmlFor="empty">

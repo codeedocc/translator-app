@@ -24,14 +24,14 @@ const TextInput: React.FC<ITextInput> = ({
   const [alertEmpty, setAlertEmpty] = useState<boolean>(false)
   const [alertExists, setAlertExists] = useState<boolean>(false)
 
+  const textRef = useRef<HTMLTextAreaElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const { setClearTranslation, setIsOpenAddFav, setFavName } = useActions()
 
   const { clearTranslation, word } = useAppSelector((state) => state.language)
   const { isOpenAddFav, favName } = useAppSelector((state) => state.modal)
   const { chosenCountry } = useAppSelector((state) => state.country)
-
-  const textRef = useRef<HTMLTextAreaElement | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(translatedWord!.data.translatedText)

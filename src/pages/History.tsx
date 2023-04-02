@@ -9,6 +9,7 @@ const History: React.FC = () => {
   const navigate = useNavigate()
 
   const { setHistoryText } = useActions()
+
   const { historyText } = useAppSelector((state) => state.language)
 
   const removeHistory = (id: number) => {
@@ -35,7 +36,7 @@ const History: React.FC = () => {
           <button
             id="empty"
             style={{ display: 'none' }}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/translator-app')}
           />
 
           <label htmlFor="empty">

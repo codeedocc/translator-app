@@ -14,12 +14,11 @@ import Select from 'react-select'
 
 const Home: React.FC = () => {
   const [options, setOptions] = useState<CountryList[]>([])
+  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
+  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
 
   const dataRef = useRef<CountryList[]>([])
   const availableLanguages = useRef<CountryList[]>([])
-
-  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
-  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
 
   const {
     setWord,
