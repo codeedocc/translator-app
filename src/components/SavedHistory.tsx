@@ -7,6 +7,7 @@ interface ISavedHistory {
   to: string
   id: number
   removeHistory: (id: number) => void
+  formatedDate: string
 }
 
 const SavedHistory: React.FC<ISavedHistory> = ({
@@ -16,6 +17,7 @@ const SavedHistory: React.FC<ISavedHistory> = ({
   to,
   id,
   removeHistory,
+  formatedDate,
 }) => {
   return (
     <div className="history-wrapper">
@@ -39,6 +41,9 @@ const SavedHistory: React.FC<ISavedHistory> = ({
           <p>{to}</p>
           <p>{translatedWord}</p>
         </span>
+      </div>
+      <div className="info-time">
+        <p>{formatedDate}</p>
       </div>
     </div>
   )

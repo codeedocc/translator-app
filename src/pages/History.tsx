@@ -48,6 +48,13 @@ const History: React.FC = () => {
       )}
 
       {historyText.map((el) => {
+        const date = new Date(el.id)
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+
+        const formatedDate = `${day}/${month}/${year}`
+
         return (
           <SavedHistory
             key={el.id}
@@ -57,6 +64,7 @@ const History: React.FC = () => {
             to={el.to}
             id={el.id}
             removeHistory={removeHistory}
+            formatedDate={formatedDate}
           />
         )
       })}
