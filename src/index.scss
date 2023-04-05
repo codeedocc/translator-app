@@ -65,26 +65,31 @@
       cursor: pointer;
       display: flex;
       gap: 10px;
+    }
 
-      button {
-        font-family: 'Roboto', sans-serif;
-        color: #ffffff;
-        font-size: 18px;
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
+    button {
+      font-family: 'Roboto', sans-serif;
+      color: #ffffff;
+      font-size: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
 
-      img {
-        height: 42px;
-        width: 42px;
-      }
+    img {
+      height: 42px;
+      width: 42px;
+    }
 
-      .remove-fav {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
+    .remove-fav {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      transition: scale 0.22s ease-in-out;
+
+      &:hover {
+        scale: 1.1;
       }
     }
   }
@@ -122,6 +127,17 @@
           rgba(103, 80, 164, 0.05)
         ),
         #fffbfe;
+      animation: slide-in 0.2s ease-out forwards;
+      transform: translateY(-100%);
+
+      @keyframes slide-in {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
 
       &.description {
         height: auto;
@@ -146,6 +162,11 @@
 
           button {
             background: red;
+            transition: scale 0.22s ease-in-out;
+
+            &:hover {
+              opacity: 0.8;
+            }
           }
 
           .exit {
@@ -507,12 +528,23 @@
           font-weight: 400;
           font-size: 14px;
           cursor: pointer;
+
+          transition: scale 0.22s ease-in-out;
+
+          &:hover {
+            opacity: 0.8;
+          }
         }
 
         img {
           cursor: pointer;
           margin-right: 12px;
           margin-left: 20px;
+          transition: scale 0.22s ease-in-out;
+
+          &:hover {
+            scale: 1.1;
+          }
         }
       }
 
@@ -776,6 +808,11 @@
         font-weight: 400;
         font-size: 12px;
         color: #000000;
+        transition: scale 0.22s ease-in-out;
+
+        &:hover {
+          scale: 1.05;
+        }
       }
 
       &.active {
