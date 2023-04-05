@@ -48,12 +48,15 @@ const History: React.FC = () => {
       )}
 
       {historyText.map((el) => {
+        const timeZone = { timeZone: 'Europe/Moscow' }
+
         const date = new Date(el.id)
         const year = date.getFullYear()
         const month = date.getMonth() + 1
         const day = date.getDate()
 
         const formatedDate = `${day}/${month}/${year}`
+        const formatedTime = date.toLocaleTimeString('ru-RU', timeZone)
 
         return (
           <SavedHistory
@@ -65,6 +68,7 @@ const History: React.FC = () => {
             id={el.id}
             removeHistory={removeHistory}
             formatedDate={formatedDate}
+            formatedTime={formatedTime}
           />
         )
       })}

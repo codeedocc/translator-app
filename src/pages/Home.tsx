@@ -14,8 +14,22 @@ import Select from 'react-select'
 
 const Home: React.FC = () => {
   const [options, setOptions] = useState<CountryList[]>([])
-  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>('ru')
-  const [currentCountryTo, setCurrentCountryTo] = useState<string>('en')
+
+  const [currentCountryFrom, setCurrentCountryFrom] = useState<string>(() => {
+    const storedCountry = JSON.parse(
+      localStorage.getItem('selectedCountryFrom') || '[]'
+    )
+
+    return storedCountry?.value || 'ru'
+  })
+
+  const [currentCountryTo, setCurrentCountryTo] = useState<string>(() => {
+    const storedCountry = JSON.parse(
+      localStorage.getItem('selectedCountryTo') || '[]'
+    )
+
+    return storedCountry?.value || 'en'
+  })
 
   const dataRef = useRef<CountryList[]>([])
   const availableLanguages = useRef<CountryList[]>([])
@@ -177,6 +191,17 @@ const Home: React.FC = () => {
       localStorage.setItem(`history - ${history.id}`, JSON.stringify(history))
     }
   }, [translatedWord])
+
+  useEffect(() => {
+    localStorage.setItem(
+      'selectedCountryFrom',
+      JSON.stringify(chosenCountry.from)
+    )
+  }, [currentCountryFrom])
+
+  useEffect(() => {
+    localStorage.setItem('selectedCountryTo', JSON.stringify(chosenCountry.to))
+  }, [currentCountryTo])
 
   useEffect(() => {
     getCountries()
