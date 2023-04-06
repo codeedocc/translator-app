@@ -156,6 +156,7 @@ export interface FavText {
   from: string
   to: string
   id: number
+  added: boolean
 }
 
 export interface History {

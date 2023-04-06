@@ -5,18 +5,38 @@ interface IInitialState {
   chosenCountry: ChosenCountry
 }
 
+const storedCountryFrom = JSON.parse(
+  localStorage.getItem('selectedCountryFrom') || '[]'
+)
+
+const storedCountryTo = JSON.parse(
+  localStorage.getItem('selectedCountryTo') || '[]'
+)
+
 const initialState: IInitialState = {
   chosenCountry: {
-    from: {
-      value: 'ru',
-      label: 'Россия',
-      flag: 'https://flagcdn.com/ru.svg',
-    },
-    to: {
-      value: 'en',
-      label: 'Америка',
-      flag: 'https://flagcdn.com/us.svg',
-    },
+    from: storedCountryFrom
+      ? {
+          value: storedCountryFrom.value,
+          label: storedCountryFrom.label,
+          flag: storedCountryFrom.flag,
+        }
+      : {
+          value: 'ru',
+          label: 'Россия',
+          flag: 'https://flagcdn.com/ru.svg',
+        },
+    to: storedCountryTo
+      ? {
+          value: storedCountryTo.value,
+          label: storedCountryTo.label,
+          flag: storedCountryTo.flag,
+        }
+      : {
+          value: 'en',
+          label: 'Америка',
+          flag: 'https://flagcdn.com/us.svg',
+        },
   },
 }
 

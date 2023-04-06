@@ -22,13 +22,19 @@ const Favourite: React.FC = () => {
     setOpenModalId(null)
   }
 
-  const removeFav = (title: string) => {
-    const youSure = window.confirm('Удалить из избранного?')
+  const changeAdded = (title: string) => {
+    setFavText(
+      favText.map((el) => {
+        if (el.title === title) {
+          return {
+            ...el,
+            added: !el.added,
+          }
+        }
 
-    if (youSure) {
-      setFavText(favText.filter((el) => el.title !== title))
-      localStorage.removeItem(`favourite - ${title}`)
-    }
+        return el
+      })
+    )
   }
 
   useEffect(() => {
@@ -74,7 +80,8 @@ const Favourite: React.FC = () => {
             handleInfoClick={handleInfoClick}
             handleCloseModal={handleCloseModal}
             isOpenFav={openModalId === el.id}
-            removeFav={removeFav}
+            changeAdded={changeAdded}
+            added={el.added}
           />
         )
       })}

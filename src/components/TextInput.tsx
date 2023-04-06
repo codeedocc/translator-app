@@ -51,6 +51,7 @@ const TextInput: React.FC<ITextInput> = ({
         from: chosenCountry.from.value,
         to: chosenCountry.to.value,
         id: Date.now(),
+        added: true,
       }
 
       localStorage.setItem(`favourite - ${favName}`, JSON.stringify(favourite))

@@ -745,6 +745,16 @@
         padding-right: 15px;
         padding-left: 15px;
 
+        &.added {
+          background: linear-gradient(
+              0deg,
+              rgba(85, 84, 85, 0.13),
+              rgba(85, 84, 85, 0.13)
+            ),
+            #fffbfe;
+          box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25);
+        }
+
         @include pc {
           width: 60%;
         }
@@ -772,6 +782,17 @@
             line-height: 19px;
             color: #003366;
             cursor: pointer;
+          }
+
+          button {
+            background: none;
+            font-size: 20px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #003366;
           }
         }
       }

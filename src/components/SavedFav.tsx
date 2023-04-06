@@ -1,13 +1,13 @@
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { GrFormClose } from 'react-icons/gr'
 import { FavText } from '../models/model'
-import { infoFav } from '../assets/icons'
 import { Modal } from '.'
 
 interface ISavedFav extends FavText {
   handleInfoClick: (id: number) => void
   handleCloseModal: () => void
+  changeAdded: (title: string) => void
   isOpenFav: boolean
-  removeFav: (id: string) => void
 }
 
 const SavedFav: React.FC<ISavedFav> = ({
@@ -19,18 +19,24 @@ const SavedFav: React.FC<ISavedFav> = ({
   isOpenFav,
   handleInfoClick,
   handleCloseModal,
-  removeFav,
+  changeAdded,
   id,
+  added,
 }) => {
   return (
     <>
-      <div className="info-text">
+      <div className={added ? 'info-text' : 'info-text added'}>
         <div className="info-wrapper">
           <p onClick={() => handleInfoClick(id!)}>{title}</p>
-          <button id="infoFav" style={{ display: 'none' }} />
-          <label htmlFor="infoFav">
-            <img src={infoFav} alt={title} onClick={() => removeFav(title)} />
-          </label>
+          {added ? (
+            <button onClick={() => changeAdded(title)}>
+              <AiFillStar />
+            </button>
+          ) : (
+            <button onClick={() => changeAdded(title)}>
+              <AiOutlineStar />
+            </button>
+          )}
         </div>
       </div>
 
