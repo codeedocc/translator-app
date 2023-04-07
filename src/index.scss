@@ -784,6 +784,10 @@
             line-height: 19px;
             color: #003366;
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 70%;
           }
 
           button {
