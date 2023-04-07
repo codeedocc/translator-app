@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { copy, cross, favourite } from '../assets/icons'
-import { TranslatedResponse } from '../models/model'
+import { Favourite, TranslatedResponse } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { Loader, Modal } from './'
+import { v4 as uuidv4 } from 'uuid'
 import { GrFormClose } from 'react-icons/gr'
 import { useActions } from '../hooks/actions'
 
@@ -21,6 +22,8 @@ const TextInput: React.FC<ITextInput> = ({
   setWord,
   getTranslate,
 }) => {
+  const id = uuidv4()
+
   const [alertEmpty, setAlertEmpty] = useState<boolean>(false)
   const [alertExists, setAlertExists] = useState<boolean>(false)
 
@@ -44,20 +47,21 @@ const TextInput: React.FC<ITextInput> = ({
     const keyExists = keys.find((el) => el === `favourite - ${favName}`)
 
     if (!keyExists && favName.trim() !== '') {
-      const favourite = {
+      const favourite: Favourite = {
         title: favName,
         word: word,
-        translatedWord: translatedWord?.data.translatedText,
+        translatedWord: translatedWord!.data.translatedText,
         from: chosenCountry.from.value,
         to: chosenCountry.to.value,
-        id: Date.now(),
-        added: true,
+        id: id,
+        addedToFav: true,
+        addedToFavTime: Date.now(),
       }
 
       localStorage.setItem(`favourite - ${favName}`, JSON.stringify(favourite))
+
       setFavName('')
       setIsOpenAddFav(false)
-
       toast('Добавлено в избранное', {
         duration: 2000,
         icon: '❤️',
@@ -115,17 +119,21 @@ const TextInput: React.FC<ITextInput> = ({
                 value={favName}
                 onChange={(e) => setFavName(e.target.value)}
               />
+
               {alertEmpty && (
                 <p style={{ color: 'red' }}>Название не может быть пустым.</p>
               )}
+
               {alertExists && (
                 <p style={{ color: 'red' }}>Такое название уже существует.</p>
               )}
+
               <button onClick={handeAddFav}>ОК</button>
             </div>
           </div>
         </Modal>
       )}
+
       {getTranslate ? (
         <div className="text-input">
           <div className="header">

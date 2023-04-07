@@ -11,18 +11,18 @@ interface ISavedHistory {
   formatedDate: string
   formatedTime: string
   alertExists: boolean
+  addedToFav: boolean
   alertEmpty: boolean
   isOpenFav: boolean
-  added: boolean
   item: History
   word: string
   from: string
   to: string
-  id: number
+  id: string
   handeAddFav: (item: History, favName: string) => void
-  handleInfoClick: (id: number, item: History) => void
+  handleInfoClick: (id: string, item: History) => void
   removeAdded: (item: History) => void
-  removeHistory: (id: number) => void
+  removeHistory: (id: string) => void
   handleCloseModal: () => void
 }
 
@@ -31,9 +31,9 @@ const SavedHistory: React.FC<ISavedHistory> = ({
   formatedDate,
   formatedTime,
   alertExists,
+  addedToFav,
   alertEmpty,
   isOpenFav,
-  added,
   word,
   item,
   from,
@@ -90,7 +90,7 @@ const SavedHistory: React.FC<ISavedHistory> = ({
 
       <div className="history-wrapper">
         <div className="exit">
-          {added ? (
+          {addedToFav ? (
             <button onClick={() => removeAdded(item)}>
               <AiFillStar />
             </button>
@@ -120,6 +120,7 @@ const SavedHistory: React.FC<ISavedHistory> = ({
             <p>{translatedWord}</p>
           </span>
         </div>
+
         <div className="info-time">
           <p>{formatedTime}</p>
           <p>{formatedDate}</p>

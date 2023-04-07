@@ -7,12 +7,15 @@ import { useSearchCountriesQuery } from '../store/country/country.api'
 import { CountryList, History } from '../models/model'
 import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
+import { v4 as uuidv4 } from 'uuid'
 import { GrFormClose } from 'react-icons/gr'
 import { useActions } from '../hooks/actions'
 import { useState } from 'react'
 import Select from 'react-select'
 
 const Home: React.FC = () => {
+  const id = uuidv4()
+
   const [options, setOptions] = useState<CountryList[]>([])
 
   const [currentCountryFrom, setCurrentCountryFrom] = useState<string>(() => {
@@ -185,10 +188,13 @@ const Home: React.FC = () => {
         translatedWord: translatedWord!.data.translatedText,
         from: chosenCountry.from.value.toLowerCase(),
         to: chosenCountry.to.value.toLowerCase(),
-        id: Date.now(),
-        added: false,
+        id: id,
+        addedToFav: false,
+        createdTime: Date.now(),
       }
+
       setHistoryText(historyText.concat(history))
+
       localStorage.setItem(`history - ${history.id}`, JSON.stringify(history))
     }
   }, [translatedWord])
@@ -198,11 +204,9 @@ const Home: React.FC = () => {
       'selectedCountryFrom',
       JSON.stringify(chosenCountry.from)
     )
-  }, [currentCountryFrom])
 
-  useEffect(() => {
     localStorage.setItem('selectedCountryTo', JSON.stringify(chosenCountry.to))
-  }, [currentCountryTo])
+  }, [currentCountryFrom, currentCountryTo])
 
   useEffect(() => {
     getCountries()
@@ -221,6 +225,7 @@ const Home: React.FC = () => {
           <div className="modal-sides">
             <div className="modal-from">
               <p>С какого языка?</p>
+
               {options && (
                 <Select
                   onChange={(e) => onChangeSelect(e, 'from')}
@@ -233,6 +238,7 @@ const Home: React.FC = () => {
 
             <div className="modal-to">
               <p>На какой язык?</p>
+
               {options && (
                 <Select
                   onChange={(e) => onChangeSelect(e, 'to')}

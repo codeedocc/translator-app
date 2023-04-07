@@ -1,4 +1,4 @@
-import { Favourite, HistoryWrapper, Home } from './'
+import { FavouriteWrapper, HistoryWrapper, Home } from './'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../hooks/redux'
 import { useActions } from '../hooks/actions'
@@ -15,7 +15,7 @@ const Pages: React.FC = () => {
     if (location.pathname !== '/translator-app/favourite') {
       setFavText(
         favText.filter((el) => {
-          if (el.added === false) {
+          if (el.addedToFav === false) {
             localStorage.removeItem(`favourite - ${el.title}`)
 
             const historyItem = historyText.find((item) => item.id === el.id)
@@ -27,14 +27,14 @@ const Pages: React.FC = () => {
                 `history - ${historyItem.id}`,
                 JSON.stringify({
                   ...historyItem,
-                  added: false,
+                  addedToFav: false,
                 })
               )
 
               setHistoryText(
                 historyText.map((item) => {
                   if (item.id === el.id) {
-                    return { ...item, added: false }
+                    return { ...item, addedToFav: false }
                   }
                   return item
                 })
@@ -42,7 +42,7 @@ const Pages: React.FC = () => {
             }
           }
 
-          if (el.added === true) {
+          if (el.addedToFav === true) {
             return true
           }
         })
@@ -54,7 +54,7 @@ const Pages: React.FC = () => {
     <Routes>
       <Route path="/translator-app" element={<Home />} />
       <Route path="/translator-app/history" element={<HistoryWrapper />} />
-      <Route path="/translator-app/favourite" element={<Favourite />} />
+      <Route path="/translator-app/favourite" element={<FavouriteWrapper />} />
     </Routes>
   )
 }

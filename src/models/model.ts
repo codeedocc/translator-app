@@ -149,21 +149,17 @@ export interface ChosenCountry {
   to: CountryList
 }
 
-export interface FavText {
-  title?: string
+export interface History {
   word: string
   translatedWord: string
   from: string
   to: string
-  id: number
-  added: boolean
+  id: string
+  addedToFav: boolean
+  createdTime?: number
 }
 
-export interface History extends FavText {
-  word: string
-  translatedWord: string
-  from: string
-  to: string
-  id: number
-  added: boolean
+export interface Favourite extends History {
+  title: string
+  addedToFavTime: number
 }

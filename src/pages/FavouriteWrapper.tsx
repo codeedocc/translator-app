@@ -4,18 +4,17 @@ import { useNavigate } from 'react-router-dom'
 import { useActions } from '../hooks/actions'
 import { emptyFav } from '../assets/icons'
 import { SavedFav } from '../components'
-import { FavText } from '../models/model'
 
-const Favourite: React.FC = () => {
+const FavouriteWrapper: React.FC = () => {
   const navigate = useNavigate()
 
-  const [openModalId, setOpenModalId] = useState<number | null>(null)
+  const [openModalId, setOpenModalId] = useState<string | null>(null)
 
   const { setFavText } = useActions()
 
   const { favText } = useAppSelector((state) => state.language)
 
-  const handleInfoClick = (id: number) => {
+  const handleInfoClick = (id: string) => {
     setOpenModalId(id)
   }
 
@@ -29,7 +28,7 @@ const Favourite: React.FC = () => {
         if (el.title === title) {
           return {
             ...el,
-            added: !el.added,
+            addedToFav: !el.addedToFav,
           }
         }
 
@@ -46,7 +45,7 @@ const Favourite: React.FC = () => {
       JSON.parse(localStorage.getItem(key) || '[]')
     )
 
-    const sortedData = data.sort((a, b) => a.id - b.id)
+    const sortedData = data.sort((a, b) => a.addedToFavTime - b.addedToFavTime)
     setFavText(sortedData)
   }, [])
 
@@ -72,9 +71,10 @@ const Favourite: React.FC = () => {
         return (
           <SavedFav
             translatedWord={el.translatedWord}
+            addedToFavTime={el.addedToFavTime}
             isOpenFav={openModalId === el.id}
+            addedToFav={el.addedToFav}
             title={el.title}
-            added={el.added}
             from={el.from}
             word={el.word}
             key={el.id}
@@ -90,4 +90,4 @@ const Favourite: React.FC = () => {
   )
 }
 
-export default Favourite
+export default FavouriteWrapper

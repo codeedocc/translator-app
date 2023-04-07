@@ -1,4 +1,4 @@
-import { FavText, History } from '../../models/model'
+import { Favourite, History } from '../../models/model'
 import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
@@ -6,7 +6,7 @@ interface IInitialState {
   currentHistory: History
   historyText: History[]
   copiedWord: string
-  favText: FavText[]
+  favText: Favourite[]
   word: string
 }
 
@@ -18,7 +18,8 @@ const initialState: IInitialState = {
     from: '',
     to: '',
     id: 0,
-    added: false,
+    addedToFav: false,
+    createdTime: 0,
   },
   historyText: [],
   copiedWord: '',

@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
+import { Favourite, History } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
 import { SavedHistory } from '../components'
 import { historyPage } from '../assets/icons'
 import { useNavigate } from 'react-router-dom'
 import { useActions } from '../hooks/actions'
-import { History } from '../models/model'
 
 const HistoryWrapper: React.FC = () => {
   const navigate = useNavigate()
 
   const [alertEmpty, setAlertEmpty] = useState<boolean>(false)
   const [alertExists, setAlertExists] = useState<boolean>(false)
-  const [openModalId, setOpenModalId] = useState<number | null>(null)
+  const [openModalId, setOpenModalId] = useState<string | null>(null)
 
   const { setHistoryText, setFavName, setCurrentHistory } = useActions()
 
@@ -19,7 +19,7 @@ const HistoryWrapper: React.FC = () => {
     (state) => state.language
   )
 
-  const handleInfoClick = (id: number, item: History) => {
+  const handleInfoClick = (id: string, item: History) => {
     setOpenModalId(id)
     setCurrentHistory(item)
   }
@@ -28,7 +28,7 @@ const HistoryWrapper: React.FC = () => {
     setOpenModalId(null)
   }
 
-  const removeHistory = (id: number) => {
+  const removeHistory = (id: string) => {
     setHistoryText(historyText.filter((el) => el.id !== id))
     localStorage.removeItem(`history - ${id}`)
   }
@@ -50,14 +50,16 @@ const HistoryWrapper: React.FC = () => {
         }
       })
 
-      const favourite = {
+      const favourite: Favourite = {
         title: favName,
         word: currentHistory.word,
         translatedWord: currentHistory.translatedWord,
         from: currentHistory.from,
         to: currentHistory.to,
         id: currentHistory.id,
-        added: true,
+        addedToFav: true,
+        addedToFavTime: Date.now(),
+        createdTime: currentHistory.createdTime,
       }
 
       setHistoryText(
@@ -65,7 +67,7 @@ const HistoryWrapper: React.FC = () => {
           if (el.id === item.id) {
             return {
               ...el,
-              added: !el.added,
+              addedToFav: !el.addedToFav,
             }
           }
 
@@ -95,7 +97,7 @@ const HistoryWrapper: React.FC = () => {
     const keys = Object.keys(localStorage)
     const favouriteKeys = keys.filter((el) => el.startsWith('fav'))
 
-    const data: History[] = favouriteKeys.map((key) =>
+    const data: Favourite[] = favouriteKeys.map((key) =>
       JSON.parse(localStorage.getItem(key) || '[]')
     )
 
@@ -107,9 +109,9 @@ const HistoryWrapper: React.FC = () => {
       }
     })
 
-    const updatedHistoryData = {
+    const updatedHistoryData: History = {
       ...item,
-      added: false,
+      addedToFav: false,
     }
 
     localStorage.removeItem(`history - ${item.id}`)
@@ -133,11 +135,11 @@ const HistoryWrapper: React.FC = () => {
     const keys = Object.keys(localStorage)
     const historyKeys = keys.filter((el) => el.startsWith('his'))
 
-    const data = historyKeys.map((key) =>
+    const data: History[] = historyKeys.map((key) =>
       JSON.parse(localStorage.getItem(key) || '[]')
     )
 
-    const sortedData = data.sort((a, b) => a.id - b.id)
+    const sortedData = data.sort((a, b) => a.createdTime! - b.createdTime!)
 
     setHistoryText(sortedData)
   }, [])
@@ -163,7 +165,7 @@ const HistoryWrapper: React.FC = () => {
       {historyText?.map((el) => {
         const timeZone = { timeZone: 'Europe/Moscow' }
 
-        const date = new Date(el.id)
+        const date = new Date(el.createdTime!)
         const year = date.getFullYear()
         const month = date.getMonth() + 1
         const day = date.getDate()
@@ -177,9 +179,9 @@ const HistoryWrapper: React.FC = () => {
             isOpenFav={openModalId === el.id}
             formatedDate={formatedDate}
             formatedTime={formatedTime}
+            addedToFav={el.addedToFav}
             alertExists={alertExists}
             alertEmpty={alertEmpty}
-            added={el.added}
             from={el.from}
             word={el.word}
             key={el.id}
