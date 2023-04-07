@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface IInitialState {
+  isRemovingHistory: boolean
   isOpenLanguage: boolean
+  isRemovingFav: boolean
   isOpenAddFav: boolean
   favName: string
-  isRemovingFav: boolean
-  isRemovingHistory: boolean
 }
 
 const initialState: IInitialState = {
+  isRemovingHistory: false,
   isOpenLanguage: false,
+  isRemovingFav: false,
   isOpenAddFav: false,
   favName: '',
-  isRemovingFav: false,
-  isRemovingHistory: false,
 }
 
 export const modalSlice = createSlice({

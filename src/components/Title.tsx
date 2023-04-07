@@ -18,7 +18,7 @@ const Title: React.FC = () => {
   )
 
   const checkStorageFavourite = () => {
-    if (location.pathname === '/translator-app/favourite' && favText.length) {
+    if (location.pathname === '/translator-app/favourite' && favText?.length) {
       return true
     }
 
@@ -26,7 +26,10 @@ const Title: React.FC = () => {
   }
 
   const checkStorageHistory = () => {
-    if (location.pathname === '/translator-app/history' && historyText.length) {
+    if (
+      location.pathname === '/translator-app/history' &&
+      historyText?.length
+    ) {
       return true
     }
 

@@ -186,6 +186,7 @@ const Home: React.FC = () => {
         from: chosenCountry.from.value.toLowerCase(),
         to: chosenCountry.to.value.toLowerCase(),
         id: Date.now(),
+        added: false,
       }
       setHistoryText(historyText.concat(history))
       localStorage.setItem(`history - ${history.id}`, JSON.stringify(history))

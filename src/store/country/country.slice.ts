@@ -15,7 +15,7 @@ const storedCountryTo = JSON.parse(
 
 const initialState: IInitialState = {
   chosenCountry: {
-    from: storedCountryFrom
+    from: Object.keys(storedCountryFrom).length
       ? {
           value: storedCountryFrom.value,
           label: storedCountryFrom.label,
@@ -26,7 +26,7 @@ const initialState: IInitialState = {
           label: 'Россия',
           flag: 'https://flagcdn.com/ru.svg',
         },
-    to: storedCountryTo
+    to: Object.keys(storedCountryTo).length
       ? {
           value: storedCountryTo.value,
           label: storedCountryTo.label,

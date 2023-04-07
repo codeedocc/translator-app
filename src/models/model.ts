@@ -125,17 +125,6 @@ export interface Data {
   translatedText: string
 }
 
-export interface CountryList {
-  value: string
-  label: string
-  flag: string
-}
-
-export interface ChosenCountry {
-  from: CountryList
-  to: CountryList
-}
-
 export interface LanguagesResponse {
   data: Data
 }
@@ -149,8 +138,19 @@ export interface Language {
   name: string
 }
 
+export interface CountryList {
+  value: string
+  label: string
+  flag: string
+}
+
+export interface ChosenCountry {
+  from: CountryList
+  to: CountryList
+}
+
 export interface FavText {
-  title: string
+  title?: string
   word: string
   translatedWord: string
   from: string
@@ -159,10 +159,11 @@ export interface FavText {
   added: boolean
 }
 
-export interface History {
+export interface History extends FavText {
   word: string
   translatedWord: string
   from: string
   to: string
   id: number
+  added: boolean
 }

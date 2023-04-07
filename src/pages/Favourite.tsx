@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useActions } from '../hooks/actions'
 import { emptyFav } from '../assets/icons'
 import { SavedFav } from '../components'
+import { FavText } from '../models/model'
 
 const Favourite: React.FC = () => {
   const navigate = useNavigate()
@@ -70,18 +71,18 @@ const Favourite: React.FC = () => {
       {favText.map((el) => {
         return (
           <SavedFav
-            title={el.title}
-            from={el.from}
-            to={el.to}
-            word={el.word}
             translatedWord={el.translatedWord}
-            id={el.id}
-            key={el.id}
-            handleInfoClick={handleInfoClick}
-            handleCloseModal={handleCloseModal}
             isOpenFav={openModalId === el.id}
-            changeAdded={changeAdded}
+            title={el.title}
             added={el.added}
+            from={el.from}
+            word={el.word}
+            key={el.id}
+            id={el.id}
+            to={el.to}
+            handleCloseModal={handleCloseModal}
+            handleInfoClick={handleInfoClick}
+            changeAdded={changeAdded}
           />
         )
       })}

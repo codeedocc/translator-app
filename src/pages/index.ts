@@ -1,6 +1,6 @@
+import HistoryWrapper from './HistoryWrapper'
 import Favourite from './Favourite'
-import History from './History'
 import Pages from './Pages'
 import Home from './Home'
 
-export { Home, History, Favourite, Pages }
+export { Home, HistoryWrapper, Favourite, Pages }

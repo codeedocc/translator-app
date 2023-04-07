@@ -658,8 +658,9 @@
         .exit {
           padding-top: 10px;
           padding-right: 20px;
+          padding-left: 6px;
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
 
           button {
             background: none;
@@ -669,6 +670,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            color: #003366;
           }
         }
 

@@ -9,17 +9,17 @@ import { GrFormClose } from 'react-icons/gr'
 import { useActions } from '../hooks/actions'
 
 interface ITextInput {
-  getTranslate?: () => void
   setWord?: ActionCreatorWithPayload<any, 'language/setWord'>
   translatedWord?: TranslatedResponse
   isLoading?: boolean
+  getTranslate?: () => void
 }
 
 const TextInput: React.FC<ITextInput> = ({
-  getTranslate,
-  setWord,
   translatedWord,
   isLoading,
+  setWord,
+  getTranslate,
 }) => {
   const [alertEmpty, setAlertEmpty] = useState<boolean>(false)
   const [alertExists, setAlertExists] = useState<boolean>(false)

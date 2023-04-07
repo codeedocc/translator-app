@@ -4,24 +4,24 @@ import { FavText } from '../models/model'
 import { Modal } from '.'
 
 interface ISavedFav extends FavText {
-  handleInfoClick: (id: number) => void
-  handleCloseModal: () => void
-  changeAdded: (title: string) => void
   isOpenFav: boolean
+  handleInfoClick: (id: number) => void
+  changeAdded: (title: string) => void
+  handleCloseModal: () => void
 }
 
 const SavedFav: React.FC<ISavedFav> = ({
-  to,
+  translatedWord,
+  isOpenFav,
+  added,
+  title,
   from,
   word,
-  translatedWord,
-  title,
-  isOpenFav,
-  handleInfoClick,
-  handleCloseModal,
-  changeAdded,
   id,
-  added,
+  to,
+  handleCloseModal,
+  handleInfoClick,
+  changeAdded,
 }) => {
   return (
     <>
@@ -29,11 +29,11 @@ const SavedFav: React.FC<ISavedFav> = ({
         <div className="info-wrapper">
           <p onClick={() => handleInfoClick(id!)}>{title}</p>
           {added ? (
-            <button onClick={() => changeAdded(title)}>
+            <button onClick={() => changeAdded(title!)}>
               <AiFillStar />
             </button>
           ) : (
-            <button onClick={() => changeAdded(title)}>
+            <button onClick={() => changeAdded(title!)}>
               <AiOutlineStar />
             </button>
           )}
