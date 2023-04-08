@@ -22,6 +22,9 @@ const HistoryWrapper: React.FC = () => {
   const handleInfoClick = (id: string, item: History) => {
     setOpenModalId(id)
     setCurrentHistory(item)
+    setFavName('')
+    setAlertExists(false)
+    setAlertEmpty(false)
   }
 
   const handleCloseModal = () => {
