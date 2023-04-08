@@ -37,14 +37,32 @@ const Title: React.FC = () => {
   }
 
   const favouriteRemover = () => {
-    Object.keys(localStorage).forEach((key) => {
+    const keys = Object.keys(localStorage)
+
+    keys.forEach((key) => {
       if (key.startsWith('favourite')) {
         localStorage.removeItem(key)
       }
     })
 
+    const historyKeys = keys.filter((el) => el.startsWith('history'))
+
+    const updatedHistoryText = historyKeys.map((key) => {
+      const historyItem = JSON.parse(localStorage.getItem(key) || '[]')
+
+      if (historyItem.addedToFav) {
+        const updatedHistoryItem = { ...historyItem, addedToFav: false }
+
+        localStorage.setItem(key, JSON.stringify(updatedHistoryItem))
+        return updatedHistoryItem
+      } else {
+        return historyItem
+      }
+    })
+
     setFavText([])
     setIsRemovingFav(false)
+    setHistoryText(updatedHistoryText)
   }
 
   const historyRemover = () => {

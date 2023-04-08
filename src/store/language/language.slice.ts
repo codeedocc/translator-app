@@ -17,7 +17,7 @@ const initialState: IInitialState = {
     translatedWord: '',
     from: '',
     to: '',
-    id: 0,
+    id: '',
     addedToFav: false,
     createdTime: 0,
   },
