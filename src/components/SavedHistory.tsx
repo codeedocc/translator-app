@@ -1,9 +1,9 @@
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
+import { useEffect, useRef } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { GrFormClose } from 'react-icons/gr'
 import { useActions } from '../hooks/actions'
 import { History } from '../models/model'
-import { useRef } from 'react'
 import { Modal } from './'
 
 interface ISavedHistory {
@@ -50,6 +50,10 @@ const SavedHistory: React.FC<ISavedHistory> = ({
   const { setFavName } = useActions()
 
   const { favName } = useAppSelector((state) => state.modal)
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [isOpenFav])
 
   return (
     <>

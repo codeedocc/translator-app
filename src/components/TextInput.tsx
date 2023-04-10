@@ -1,7 +1,7 @@
+import { Favourite, TranslatedResponse } from '../models/model'
 import { useEffect, useRef, useState } from 'react'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { copy, cross, favourite } from '../assets/icons'
-import { Favourite, TranslatedResponse } from '../models/model'
 import { useAppSelector } from '../hooks/redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { Loader, Modal } from './'
