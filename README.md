@@ -1,5 +1,5 @@
  <p><strong>Проект:</strong> https://codeedocc.github.io/translator-app/</p>
-
+ 
  <br />
 
  <h1 align="center">Используемые технологии:</h1>
